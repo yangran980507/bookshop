@@ -18,6 +18,5 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 50px;
-  background-image: url("assets/bg.gif");
 }
 </style>

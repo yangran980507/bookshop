@@ -11,19 +11,17 @@ export default {
   name: 'HelloWorld',
   data () {
     return {
-      admin: '',
-      api: {
-        target: 'http://localhost:8080',
-        changeOrigin: true,
-        pathRewrite: {
-          '^/api': '/'
-        }
+      formatDate () {
+        let date = new Date(parseInt(this.row.ShowTime) * 1000)
+        let Y = date.getFullYear() + '-'
+        let M = date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) + '-' : date.getMonth() + 1 + '-'
+        let D = date.getDate() < 10 ? '0' + date.getDate() + ' ' : date.getDate() + ' '
+        return Y + M + D
       }
     }
   }
 }
 </script>
-
 <style>
   .bg-purple {
   background: skyblue;

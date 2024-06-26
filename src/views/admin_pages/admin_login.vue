@@ -20,12 +20,9 @@
                       v-model="pwd" show-password size="small"></el-input>
           </p>
           <p>
-            <el-button class="btn_grey" type="primary" size="mini" round @click="submit">
+            <el-button class="btn_grey" type="primary" size="mini" round @click="login">
               登录
             </el-button>
-          </p>
-          <p id="message">
-            {{messages}}<br>
           </p>
       </form>
       </div>
@@ -38,22 +35,30 @@
 export default {
   data () {
     return {
-      messages: '',
       user_name: '',
       pwd: ''
     }
   },
   methods: {
-    submit: function () {
-      this.$api.post('api/admin/auth/login', {
+    login () {
+      this.$api.post('/api/admin/auth/login', {
         LoginName: this.user_name,
         Password: this.pwd
+      }).then(response => {
+        console.log(response)
+        if (response.message === 'OK') {
+          this.$message({
+            message: response.details,
+            type: 'success'
+          })
+          this.$router.push({name: 'AdminManage', params: {adminName: this.user_name}})
+        } else {
+          this.$message({
+            message: '登录失败: ' + response.response.data.data,
+            type: 'error'
+          })
+        }
       })
-        .then(response => {
-          if (response.message === 'OK') {
-            this.$router.push({name: 'AdminManage'})
-          }
-        })
     }
   }
 }
@@ -112,12 +117,5 @@ export default {
   margin: 20px;
   background-color: skyblue;
   color: white;
-}
-#message{
-  text-align: start;
-  text-indent: 30px;
-  overflow-wrap: normal;
-  color: red;
-  font-size: 15px;
 }
 </style>

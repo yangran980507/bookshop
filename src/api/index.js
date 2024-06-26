@@ -1,43 +1,33 @@
 import axios from 'axios'
-import Vue from 'vue'
-import router from '../router/index'
 import qs from 'qs'
 
 // 创建 axios 实例
 const instance = axios.create({
-  baseURL: 'http://localhost:8080',
+  baseURL: '/api/',
   timeout: 10000
 })
 
 // 请求拦截器
-instance.interceptors.request.use(config => {
+instance.interceptors.request.use(
+  config => {
   // 可在发送请求前配置 token
-  config.headers['Authorization'] = JSON.parse(sessionStorage.getItem('token'))
-  return config
-}, function (error) {
-  // 返回请求错误
-  return Promise.reject(error)
-})
+    config.headers['Authorization'] = 'Bearer ' + JSON.parse(sessionStorage.getItem('token'))
+    return config
+  }, function (error) {
+    // 返回请求错误
+    return error
+  })
 
 // 响应拦截器
 instance.interceptors.response.use(function (response) {
   // 对响应数据做些什么
   const res = response.data
-  console.log(res)
   // token 存入 sessionStorage
-  if (res.hasOwnProperty('token')) {
-    sessionStorage.setItem('token', JSON.stringify({data: res.data.token}))
+  if (res.data.hasOwnProperty('token')) {
+    sessionStorage.setItem('token', JSON.stringify(res.data.token))
   }
-  if (!res.message === 'OK') {
-    Vue.prototype.$message({
-      message: res.detail,
-      type: 'warning'
-    })
-    router.push({name: 'AdminLogin'})
-  } else {
-    // token 没问题,返回响应
-    return res
-  }
+  // 返回响应
+  return res
 }, function (error) {
   // 对响应数据错误做些什么
   return error

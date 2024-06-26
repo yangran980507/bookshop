@@ -23,33 +23,33 @@
                 background-color="#BDB76B"
                 text-color="#fff"
                 active-text-color="#ffd04b">
-                <el-menu-item index="1" @click="goUsers">
+                <el-menu-item @click="goUsers">
                   <i class="el-icon-user-solid"></i>
                   <span slot="title">用户管理</span>
                 </el-menu-item>
-                <el-submenu index="2">
+                <el-submenu index="1">
                   <template slot="title">
                     <i class="el-icon-notebook-1"></i>
                     <span>图书管理</span>
                   </template>
-                  <el-menu-item index="1-1" @click="goBooksIn">
+                  <el-menu-item @click="goBooksIn">
                     <i class="el-icon-document-add"></i>
                     <span>图书入库</span>
                   </el-menu-item>
-                  <el-menu-item index="1-2" @click="goBooksUpdate">
+                  <el-menu-item @click="goBooksUpdate">
                     <i class="el-icon-edit"></i>
                     <span>图书修改</span>
                   </el-menu-item>
                 </el-submenu>
-                <el-menu-item index="3" @click="goPolls">
+                <el-menu-item @click="goPolls">
                   <i class="el-icon-s-data"></i>
                   <span slot="title">投票管理</span>
                 </el-menu-item>
-                <el-menu-item index="4" @click="goNotices">
+                <el-menu-item @click="goNotices">
                   <i class="el-icon-s-promotion"></i>
                   <span slot="title">公告管理</span>
                 </el-menu-item>
-                <el-menu-item index="5" @click="goOrders">
+                <el-menu-item @click="goOrders">
                   <i class="el-icon-s-order"></i>
                   <span slot="title">定单管理</span>
                 </el-menu-item>
@@ -64,6 +64,8 @@
 </template>
 
 <script>
+import {config} from 'shelljs'
+
 export default {
   data () {
     return {
@@ -90,10 +92,11 @@ export default {
       this.$router.push({name: 'BookUpdate'})
     },
     goPolls () {
-      this.$router.push({name: 'PollDelete'})
+      this.$router.push({name: 'PollAdd'})
     },
     goNotices () {
       this.$router.push({name: 'NoticeDelete'})
+      this.$refs.childNotice.getNotices()
     },
     goOrders () {
       this.$router.push({name: 'OrderExecute'})
