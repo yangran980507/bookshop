@@ -11,12 +11,18 @@ export default {
   name: 'HelloWorld',
   data () {
     return {
-      formatDate () {
-        let date = new Date(parseInt(this.row.ShowTime) * 1000)
-        let Y = date.getFullYear() + '-'
-        let M = date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) + '-' : date.getMonth() + 1 + '-'
-        let D = date.getDate() < 10 ? '0' + date.getDate() + ' ' : date.getDate() + ' '
-        return Y + M + D
+      watch: {
+        tableData: {
+          handler (newVal, oldVal) {
+            for (let i = 0; i < oldVal.length; i++) {
+              if (oldVal[i].freeze === false) {
+                newVal[i].isFrozen = '冻结'
+              } else {
+                newVal[i].isFrozen = '解冻'
+              }
+            }
+          }
+        }
       }
     }
   }

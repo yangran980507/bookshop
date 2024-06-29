@@ -64,7 +64,6 @@
 </template>
 
 <script>
-import {config} from 'shelljs'
 
 export default {
   data () {
