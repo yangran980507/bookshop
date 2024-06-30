@@ -11,7 +11,7 @@
         <!-- 登录名 -->
         <el-table-column
           label="用户名"
-          width="140">
+          width="140" align="center">
           <template slot-scope="scope">
             <span style="margin-left: 10px">{{ scope.row.login_name }}</span>
           </template>
@@ -20,7 +20,7 @@
         <!-- 真实姓名 -->
         <el-table-column
           label="真实姓名"
-          width="140">
+          width="140" align="center">
           <template slot-scope="scope">
             <el-popover trigger="hover" placement="top">
               <p>姓名: {{ scope.row.true_name }}</p>
@@ -36,7 +36,7 @@
         <!-- 电话号码 -->
         <el-table-column
           label="电话"
-          width="140">
+          width="140" align="center">
           <template slot-scope="scope">
             <span style="margin-left: 10px">{{ scope.row.phone }}</span>
           </template>
@@ -45,7 +45,7 @@
         <!-- 折扣 -->
         <el-table-column
           label="折扣等级"
-          width="140">
+          width="80" align="center">
           <template slot-scope="scope">
             <span style="margin-left: 10px">{{ scope.row.grade }}</span>
           </template>
@@ -54,14 +54,14 @@
         <!-- 消费金额 -->
         <el-table-column
           label="消费额"
-          width="140">
+          width="80" align="center">
           <template slot-scope="scope">
             <span style="margin-left: 10px">{{ scope.row.amount }}</span>
           </template>
         </el-table-column>
         <!-- 消费金额 -->
         <!-- 操作 -->
-        <el-table-column label="冻结/解冻" fixed="right">
+        <el-table-column label="冻结/解冻" fixed="right" align="center">
           <template slot-scope="scope">
             <el-button
               size="mini"
@@ -167,6 +167,11 @@ export default {
             }
           }
           this.pages = response.data.page
+        } else if (response.err_code === 100102 || response.err_code === 100104) {
+          this.$message({
+            message: '鉴权失败，请重新登录！',
+            type: 'error'
+          })
         }
       })
     },

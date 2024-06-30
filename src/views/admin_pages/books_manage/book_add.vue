@@ -57,7 +57,7 @@
           <el-col :span="12">
             <el-form-item label="出版时间" required>
               <el-form-item prop="Pdate">
-                <el-date-picker type="date" placeholder="选择日期"
+                <el-date-picker type="date" placeholder="选择日期" value-format="timestamp"
                                 v-model="ruleForm.Pdate" style="width: 100%;">
                 </el-date-picker>
               </el-form-item>
@@ -105,12 +105,12 @@
       <!-- 提交/重置 -->
     </el-main>
     <el-aside width="250px">
-      <book-aside></book-aside>
+      <book-aside1></book-aside1>
     </el-aside>
   </el-container>
 </template>
 <script>
-import BookAside from '../../../components/admin_components/BookAside.vue'
+import BookAside1 from '../../../components/admin_components/BookAside1.vue'
 export default {
   data () {
     return {
@@ -169,29 +169,30 @@ export default {
     }
   },
   components: {
-    BookAside
+    BookAside1
   },
   methods: {
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.$api.post('/api/admin/books/book-storage', this.ruleForm)
+          this.$api.post('api/admin/books/book-storage', this.ruleForm)
             .then(response => {
               if (response.message === 'OK') {
                 this.$message({
-                  message: response.detail
+                  message: response.data,
+                  type: 'success'
+                })
+                this.$router.push({name: 'BookDelete'})
+              } else if (response.err_code === 100102 || response.err_code === 100104) {
+                this.$message({
+                  message: '鉴权失败，请重新登录！',
+                  type: 'error'
                 })
               } else {
-                if (response.err_code === 100102) {
-                  this.$message({
-                    message: response.detail,
-                    type: 'success'
-                  })
-                } else {
-                  this.$message({
-                    message: response.data
-                  })
-                }
+                this.$message({
+                  message: response.data,
+                  type: 'error'
+                })
               }
             })
         } else {
@@ -207,7 +208,4 @@ export default {
 }
 </script>
 <style>
-.liStates {
-  text-align: left;
-}
 </style>

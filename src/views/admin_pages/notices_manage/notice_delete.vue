@@ -49,7 +49,7 @@
               <el-button
                 size="mini"
                 type="danger"
-                @click="handleDelete(scope.row.id)">删除</el-button>
+                @click="handleDelete(scope.row.id,scope.$index)">删除</el-button>
             </template>
           </el-table-column>
         <!-- 一列-->
@@ -85,6 +85,12 @@ export default {
   components: {
     NoticeAside
   },
+  watch: {
+    tableData: {
+      handler (val) {
+      }
+    }
+  },
   mounted () {
     this.getNotices()
   },
@@ -92,14 +98,24 @@ export default {
     this.formatDate()
   },
   methods: {
-    handleDelete (id) {
+    handleDelete (id, index) {
       this.$api.del('/api/admin/notices/delete/' + id).then(response => {
           if (response.message === 'OK') {
             this.$message({
               message: response.data,
               type: 'success'
             })
-            this.getNotices()
+            this.tableData.splice(index, 1)
+          } else if (response.err_code === 100102 || response.err_code === 100104) {
+            this.$message({
+              message: '鉴权失败，请重新登录！',
+              type: 'error'
+            })
+          } else {
+            this.$message({
+              message: response.data,
+              type: 'error'
+            })
           }
       })
     },
@@ -111,21 +127,15 @@ export default {
         if (response.message === 'OK') {
           this.tableData = response.data.notices
         } else if (response.err_code === 100201) {
-          this.tableData =[{
-            Title: '',
-            ShowTime: 0,
-            Content: '',
-            ID: 0
-          }]
           this.$message({
             message: '暂无公告',
             type: 'info'
           })
-        } else {
-          this.$message({
-            message: '服务端出错',
-            type: 'error'
-          })
+        } else if (response.err_code === 100102 || response.err_code === 100104) {
+            this.$message({
+              message: '鉴权失败，请重新登录！',
+              type: 'error'
+            })
         }
       })
     },
@@ -139,7 +149,7 @@ export default {
       } else {
         return ''
       }
-    },
+    }
   }
 }
 </script>

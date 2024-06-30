@@ -41,20 +41,21 @@ export default {
   },
   methods: {
     login () {
+      let that = this
       this.$api.post('/api/admin/auth/login', {
         LoginName: this.user_name,
         Password: this.pwd
       }).then(response => {
-        console.log(response)
         if (response.message === 'OK') {
           this.$message({
             message: response.details,
             type: 'success'
           })
-          this.$router.push({name: 'AdminManage', params: {adminName: this.user_name}})
+          this.$router.push({name: 'AdminManage', query: {adminName: that.user_name}})
         } else {
+          console.log(response)
           this.$message({
-            message: '登录失败: ' + response.response.data.data,
+            message: '登录失败: ' + response.data,
             type: 'error'
           })
         }

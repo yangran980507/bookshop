@@ -3,7 +3,11 @@
       <!-- header -->
       <el-header class="header" height="40px">
           <el-col :span="18"><div class="grid-content bg-blue">图书管理系统</div></el-col>
-          <el-col :span="2"><div class="grid-content bg-purple">管理员{{admin}}</div></el-col>
+          <el-col :span="2">
+            <div class="grid-content bg-purple">管理员
+              <span id="admin_name">{{admin}}</span>
+            </div>
+          </el-col>
           <el-col :span="2"><div class="grid-content bg-purple">
             <el-link type="info" @click="returnLogin">退出到前台</el-link>
           </div></el-col>
@@ -36,7 +40,7 @@
                     <i class="el-icon-document-add"></i>
                     <span>图书入库</span>
                   </el-menu-item>
-                  <el-menu-item @click="goBooksUpdate">
+                  <el-menu-item @click="goBooksDelete">
                     <i class="el-icon-edit"></i>
                     <span>图书修改</span>
                   </el-menu-item>
@@ -71,12 +75,13 @@ export default {
       admin: ''
     }
   },
+  mounted () {
+    this.showAdmin()
+  },
   methods: {
     handleOpen (key, keyPath) {
-      console.log(key, keyPath)
     },
     handleClose (key, keyPath) {
-      console.log(key, keyPath)
     },
     returnLogin () {
       this.$router.push({name: 'AdminLogin'})
@@ -87,18 +92,20 @@ export default {
     goBooksIn () {
       this.$router.push({name: 'BookAdd'})
     },
-    goBooksUpdate () {
-      this.$router.push({name: 'BookUpdate'})
+    goBooksDelete () {
+      this.$router.push({name: 'BookDelete'})
     },
     goPolls () {
       this.$router.push({name: 'PollAdd'})
     },
     goNotices () {
       this.$router.push({name: 'NoticeDelete'})
-      this.$refs.childNotice.getNotices()
     },
     goOrders () {
       this.$router.push({name: 'OrderExecute'})
+    },
+    showAdmin () {
+      this.admin = this.$route.query.adminName
     }
   }
 }
@@ -143,5 +150,8 @@ body {
 .grid-content {
   padding-bottom: 8px;
   min-height: 32px;
+}
+#admin_name{
+  color: #f0fff0;
 }
 </style>

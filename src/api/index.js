@@ -30,7 +30,7 @@ instance.interceptors.response.use(function (response) {
   return res
 }, function (error) {
   // 对响应数据错误做些什么
-  return error
+  return error.response.data
 })
 
 // post请求
