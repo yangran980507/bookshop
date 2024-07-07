@@ -1,5 +1,5 @@
 <template>
-    <el-container class="el-container">
+    <el-container class="el-container" style="margin-top: 50px;">
       <!-- header -->
       <el-header class="header" height="40px">
           <el-col :span="18"><div class="grid-content bg-blue">图书管理系统</div></el-col>
@@ -9,7 +9,7 @@
             </div>
           </el-col>
           <el-col :span="2"><div class="grid-content bg-purple">
-            <el-link type="info" @click="returnLogin">退出到前台</el-link>
+            <el-link type="info" @click="returnHome">退出到前台</el-link>
           </div></el-col>
           <el-col :span="2"><div class="grid-content bg-purple">
             <el-link type="info" @click="returnLogin">退出登录</el-link>
@@ -20,7 +20,6 @@
         <!-- 侧边栏导航 -->
         <el-aside class="aside" width="220px">
               <el-menu
-                default-active="2"
                 class="el-menu-vertical-demo"
                 @open="handleOpen"
                 @close="handleClose"
@@ -83,6 +82,9 @@ export default {
     },
     handleClose (key, keyPath) {
     },
+    returnHome () {
+      this.$router.push({name: 'Home'})
+    },
     returnLogin () {
       this.$router.push({name: 'AdminLogin'})
     },
@@ -127,7 +129,6 @@ export default {
   height: 540px;
 }
 .el-main {
-  background-color: #fff;
   color: #333;
   text-align: center;
 }

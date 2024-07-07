@@ -2,7 +2,7 @@
   <div>
     <div>
       <img alt="加载失败" style="width: 200px; height: 140px"
-           src="../../assets/tips1.jpg"/>
+           src="../../assets/tips2.jpeg"/>
     </div>
     <ul>
       <li class="liStates">添加图书信息：点击“添加图书入库”可以进行图书信息的添加。</li>

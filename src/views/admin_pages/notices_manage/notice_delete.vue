@@ -23,7 +23,7 @@
             label="标题" width="130">
             <template slot-scope="scope">
                 <div slot="reference" class="name-wrapper">
-                  <el-tag size="medium">{{ scope.row.Title }}</el-tag>
+                  <el-tag size="medium">{{ scope.row.title }}</el-tag>
                 </div>
             </template>
           </el-table-column>
@@ -34,10 +34,10 @@
             <template slot-scope="scope">
               <el-popover trigger="hover" placement="top">
                 <p>
-                  <el-tag size="medium">{{ scope.row.Content }}</el-tag>
+                  <el-tag size="medium">{{ scope.row.content }}</el-tag>
                 </p>
                 <div slot="reference" class="name-wrapper">
-                  <el-tag size="medium">{{ scope.row.Content }}</el-tag>
+                  <el-tag size="medium">{{ scope.row.content }}</el-tag>
                 </div>
               </el-popover>
             </template>
@@ -75,10 +75,10 @@ export default {
   data () {
     return {
       tableData: [{
-        Title: '',
-        ShowTime: 0,
-        Content: '',
-        ID: 0
+        title: '',
+        show_time: 0,
+        content: '',
+        id: 0
       }]
     }
   },
@@ -140,8 +140,8 @@ export default {
       })
     },
     formatDate (row) {
-      if (row.ShowTime !== 0) {
-        let date = new Date(parseInt(row.ShowTime) * 1000);
+      if (row.show_time !== 0) {
+        let date = new Date(parseInt(row.show_time) * 1000);
         let Y = date.getFullYear() + '-';
         let M = date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) + '-' : date.getMonth() + 1 + '-';
         let D = date.getDate() < 10 ? '0' + date.getDate() + ' ' : date.getDate() + ' ';

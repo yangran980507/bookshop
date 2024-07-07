@@ -1,41 +1,115 @@
-<template>
-  <el-row>
-    <el-col :span="18"><div class="grid-content bg-purple">图书管理系统</div></el-col>
-    <el-col :span="2"><div class="grid-content bg-purple">管理员{{admin}}</div></el-col>
-    <el-col :span="2"><div class="grid-content bg-purple">退出到前台</div></el-col>
-    <el-col :span="2"><div class="grid-content bg-purple">退出登录</div></el-col>
-  </el-row>
-</template>
+<el-row class="tac">
+<el-col :span="12">
+  <el-aside width="200px">
+    <!-- newBook -->
+    <el-container style="margin-bottom: 20px;">
+      <el-main id="aside-main" style="border-radius: 5px">
+        <client-new></client-new>
+      </el-main>
+    </el-container>
+    <!-- newBook -->
+    <!-- sellBook -->
+    <el-container style="margin-bottom: 20px;">
+      <el-main id="aside-main" style="border-radius: 5px">
+        <client-sell></client-sell>
+      </el-main>
+    </el-container>
+    <!-- sellBook -->
+  </el-aside>
+  <h5>默认颜色</h5>
+  <el-menu
+    default-active="2"
+    class="el-menu-vertical-demo"
+    @open="handleOpen"
+    @close="handleClose">
+    <el-submenu index="1">
+      <template slot="title">
+        <i class="el-icon-location"></i>
+        <span>导航一</span>
+      </template>
+      <el-menu-item-group>
+        <template slot="title">分组一</template>
+        <el-menu-item index="1-1">选项1</el-menu-item>
+        <el-menu-item index="1-2">选项2</el-menu-item>
+      </el-menu-item-group>
+      <el-menu-item-group title="分组2">
+        <el-menu-item index="1-3">选项3</el-menu-item>
+      </el-menu-item-group>
+      <el-submenu index="1-4">
+        <template slot="title">选项4</template>
+        <el-menu-item index="1-4-1">选项1</el-menu-item>
+      </el-submenu>
+    </el-submenu>
+    <el-menu-item index="2">
+      <i class="el-icon-menu"></i>
+      <span slot="title">导航二</span>
+    </el-menu-item>
+    <el-menu-item index="3" disabled>
+      <i class="el-icon-document"></i>
+      <span slot="title">导航三</span>
+    </el-menu-item>
+    <el-menu-item index="4">
+      <i class="el-icon-setting"></i>
+      <span slot="title">导航四</span>
+    </el-menu-item>
+  </el-menu>
+</el-col>
+<el-col :span="12">
+  <h5>自定义颜色</h5>
+  <el-menu
+    default-active="2"
+    class="el-menu-vertical-demo"
+    @open="handleOpen"
+    @close="handleClose"
+    background-color="#545c64"
+    text-color="#fff"
+    active-text-color="#ffd04b">
+    <el-submenu index="1">
+      <template slot="title">
+        <i class="el-icon-location"></i>
+        <span>导航一</span>
+      </template>
+      <el-menu-item-group>
+        <template slot="title">分组一</template>
+        <el-menu-item index="1-1">选项1</el-menu-item>
+        <el-menu-item index="1-2">选项2</el-menu-item>
+      </el-menu-item-group>
+      <el-menu-item-group title="分组2">
+        <el-menu-item index="1-3">选项3</el-menu-item>
+      </el-menu-item-group>
+      <el-submenu index="1-4">
+        <template slot="title">选项4</template>
+        <el-menu-item index="1-4-1">选项1</el-menu-item>
+      </el-submenu>
+    </el-submenu>
+    <el-menu-item index="2">
+      <i class="el-icon-menu"></i>
+      <span slot="title">导航二</span>
+    </el-menu-item>
+    <el-menu-item index="3" disabled>
+      <i class="el-icon-document"></i>
+      <span slot="title">导航三</span>
+    </el-menu-item>
+    <el-menu-item index="4">
+      <i class="el-icon-setting"></i>
+      <span slot="title">导航四</span>
+    </el-menu-item>
+  </el-menu>
+</el-col>
+</el-row>
 <script>
+import ClientNew from './client_components/client-newbook.vue'
+import ClientSell from './client_components/client-sell.vue'
+
 export default {
-  name: 'HelloWorld',
-  data () {
-    return {
-      watch: {
-        tableData: {
-          handler (newVal, oldVal) {
-            for (let i = 0; i < oldVal.length; i++) {
-              if (oldVal[i].freeze === false) {
-                newVal[i].isFrozen = '冻结'
-              } else {
-                newVal[i].isFrozen = '解冻'
-              }
-            }
-          }
-        }
-      }
+  components: {ClientSell, ClientNew},
+  methods: {
+    handleOpen (key, keyPath) {
+      console.log(key, keyPath)
+    },
+    handleClose (key, keyPath) {
+      console.log(key, keyPath)
     }
   }
 }
 </script>
-<style>
-  .bg-purple {
-  background: skyblue;
-}
-  .grid-content {
-    padding-top: 8px;
-    text-align: left;
-    text-indent: 20px;
-    min-height: 32px;
-}
-</style>

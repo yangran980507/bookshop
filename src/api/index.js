@@ -11,7 +11,7 @@ const instance = axios.create({
 instance.interceptors.request.use(
   config => {
   // 可在发送请求前配置 token
-    config.headers['Authorization'] = 'Bearer ' + JSON.parse(sessionStorage.getItem('token'))
+    config.headers['Authorization'] = 'Bearer ' + JSON.parse(sessionStorage.getItem('book-shop-token'))
     return config
   }, function (error) {
     // 返回请求错误
@@ -24,7 +24,10 @@ instance.interceptors.response.use(function (response) {
   const res = response.data
   // token 存入 sessionStorage
   if (res.data.hasOwnProperty('token')) {
-    sessionStorage.setItem('token', JSON.stringify(res.data.token))
+    sessionStorage.setItem('book-shop-token', JSON.stringify(res.data.token))
+  }
+  if (res.data.hasOwnProperty('user')) {
+    sessionStorage.setItem('book-shop-user', JSON.stringify(res.data.user))
   }
   // 返回响应
   return res

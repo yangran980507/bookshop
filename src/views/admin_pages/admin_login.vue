@@ -52,8 +52,14 @@ export default {
             type: 'success'
           })
           this.$router.push({name: 'AdminManage', query: {adminName: that.user_name}})
+        } else if (response.err_code === 100101) {
+          this.$message({
+            message: '登录失败: ' + Object.keys(response.data).map(key => {
+              return response.data[key]
+            }),
+            type: 'error'
+          })
         } else {
-          console.log(response)
           this.$message({
             message: '登录失败: ' + response.data,
             type: 'error'
@@ -72,6 +78,7 @@ export default {
   width: 100%;
   height: 100%;
   margin-bottom: 40px;
+  margin-top: 50px;
 }
 #flex-item1{
   background-image: url("../../assets/admin_login_head.jpg");
