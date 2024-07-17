@@ -1,7 +1,7 @@
 <template>
  <el-container>
    <!-- header -->
-   <el-header>
+   <el-header style="padding: 0">
      <!-- search -->
       <client-search></client-search>
      <!-- search -->
@@ -13,10 +13,19 @@
            :data="newBookData"
            style="width: 100%">
            <el-table-column
+             label="编号" align="left"
+             width="80px">
+             <template slot-scope="scope">
+               <span style="margin-left: 10px">{{ scope.$index + 1 }}</span>
+             </template>
+           </el-table-column>
+           <el-table-column
              label="书名" align="left"
              width="200px">
              <template slot-scope="scope">
-               <span style="margin-left: 10px">{{ scope.row.book_name }}</span>
+               <el-button type="text" @click="goDetail(scope.row.book_name)">
+                 <span style="margin-left: 10px">{{ scope.row.book_name }}</span>
+               </el-button>
              </template>
            </el-table-column>
            <el-table-column
@@ -29,7 +38,7 @@
              <template slot-scope="scope">
                <el-button
                  size="mini" icon="el-icon-plus"
-                 @click="handleAddCart(scope.$index, scope.row)">
+                 @click="handleAddCart(scope.row.id)">
                  加入购物车
                </el-button>
              </template>
@@ -53,6 +62,9 @@
 
 <script>
 import ClientSearch from '../../../components/client_components/client-search.vue'
+import {setCart} from '../../../api/cart_storage'
+import {getUser} from '../../../api/storage'
+
 export default {
   data () {
     return {
@@ -92,8 +104,26 @@ export default {
     this.getBooks(this.baseURL)
   },
   methods: {
-    handleAddCart (index, row) {
-      console.log(index, row)
+    handleAddCart (bookID) {
+      this.$api.post('api/client/carts/add/' + bookID).then(response => {
+        if (response.message === 'OK') {
+          setCart(getUser().id, bookID)
+          this.$message({
+            type: 'success',
+            message: response.data
+          })
+        } else if (response.err_code === 100102) {
+          this.$message({
+            type: 'info',
+            message: '登录后可加购'
+          })
+        } else {
+          this.$message({
+            type: 'error',
+            message: response.data
+          })
+        }
+      })
     },
     getBooks (url) {
       this.$api.get(url).then(response => {
@@ -102,7 +132,12 @@ export default {
           this.pages = response.data.page
         }
       })
+    },
+    goDetail (name) {
+      this.$router.push({name: 'ClientShowDetail', query: {bookName: name}})
     }
   }
 }
 </script>
+<style scoped>
+</style>

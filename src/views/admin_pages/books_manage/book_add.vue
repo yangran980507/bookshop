@@ -101,8 +101,8 @@
           <el-button type="primary" @click="submitForm('ruleForm')">加入书库</el-button>
           <el-button @click="resetForm('ruleForm')">重置</el-button>
         </el-form-item>
+        <!-- 提交/重置 -->
       </el-form>
-      <!-- 提交/重置 -->
     </el-main>
     <el-aside width="250px">
       <book-aside1></book-aside1>

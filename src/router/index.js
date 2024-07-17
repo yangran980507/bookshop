@@ -24,6 +24,7 @@ import ClientSignup from '../views/client_pages/client-signup.vue'
 import ClientShowSearch from '../views/client_pages/client-showsearch.vue'
 import ClientShowDetail from '../views/client_pages/client-showdetail.vue'
 import ClientShowPollResult from '../views/client_pages/client-showpollresult.vue'
+import ClientSubmitOrder from '../views/client_pages/shopping_cart/client-submit-order.vue'
 
 import HelloWorld from '@/components/HelloWorld.vue'
 Vue.use(Router)
@@ -95,6 +96,11 @@ export default new Router({
           path: '/client-show-poll-result',
           name: 'ClientShowPollResult',
           component: ClientShowPollResult
+        },
+        {
+          path: '/client-submit-order',
+          name: 'ClientSubmitOrder',
+          component: ClientSubmitOrder
         }
       ]
     },

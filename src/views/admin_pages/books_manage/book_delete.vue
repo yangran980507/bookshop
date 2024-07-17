@@ -131,6 +131,7 @@
 </template>
 <script>
 import BookAside2 from '../../../components/admin_components/BookAside2.vue'
+
 export default {
   data () {
     return {

@@ -2,7 +2,7 @@
   <div>
     <el-row type="flex" justify="center" style="margin-bottom: 2px">
       <el-col :span="20">
-    <el-form  :model="person" ref="person"
+    <el-form  :model="person" ref="person" name="login"
               size="mini" style="padding-bottom: 0">
           <!-- 登录入口 -->
       <el-form-item style="text-align: left;height: 40px;">
@@ -94,5 +94,5 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 </style>

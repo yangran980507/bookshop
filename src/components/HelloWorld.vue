@@ -4,7 +4,20 @@
     <!-- newBook -->
     <el-container style="margin-bottom: 20px;">
       <el-main id="aside-main" style="border-radius: 5px">
-        <client-new></client-new>
+        <el-table
+          :data="recommendedBookData"
+          style="width: 100%">
+          <el-table-column
+            label="推荐图书" align="left"
+            width="400px">
+            <template slot-scope="scope">
+              <span>{{ scope.row.book_name }}</span>
+            </template>
+          </el-table-column>
+        </el-table>
+        <div v-if="resultCount === 0">
+          <el-empty ></el-empty>
+        </div>
       </el-main>
     </el-container>
     <!-- newBook -->

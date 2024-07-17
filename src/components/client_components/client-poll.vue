@@ -5,7 +5,7 @@
         <el-container>
           <el-header height="40px" style="width: 100%;padding: 0">
             <el-image style="width: 100%; height: 100%" :src="pollImg[0]"
-                      :fit="'fill'"></el-image>
+                      fit="cover"></el-image>
           </el-header>
           <el-main style="padding: 0">
             <el-table
@@ -13,19 +13,19 @@
               style="width: 100%"
               size="mini">
               <!-- 选中 -->
-              <el-table-column label="你需要哪方面的书籍？" fixed="right" align="left">
-                <template slot-scope="scope">
-                  <el-radio v-model="pollKeys[0]" size="mini"
-                            label="1" border>{{scope.row}}</el-radio>
-                </template>
-              </el-table-column>
+              <el-radio-group>
+                <div v-for="item in pollKeys" :key="item">
+                    <el-radio size="mini"
+                              :label="item" border>{{item}}</el-radio>
+                </div>
+              </el-radio-group>
               <!--  操作 -->
             </el-table>
             <div style="padding-top: 20px">
               <el-row>
                 <el-col :span="20" :offset="2">
                   <el-button-group>
-                    <el-button size="mini" @click="getUsers(pages.FirstPageURL)">投票</el-button>
+                    <el-button size="mini" @click="vote">投票</el-button>
                     <el-button size="mini" @click="goResult">查看结果</el-button>
                   </el-button-group>
                 </el-col>
@@ -41,7 +41,7 @@
 export default {
   data () {
     return {
-      pollImg: [require('../../assets/16.jpg')],
+      pollImg: [require('../../assets/28.jpeg')],
       pollKeys: []
     }
   },
@@ -58,6 +58,8 @@ export default {
     },
     goResult () {
       this.$router.push({name: 'ClientShowPollResult'})
+    },
+    vote () {
     }
   }
 }

@@ -7,43 +7,22 @@
           style="width: 100%"
           height="300"
           border>
-        <!-- 一列-->
           <el-table-column
             label="日期"
-            width="130"
-            >
+            width="130">
             <template slot-scope="scope">
               <i class="el-icon-time"></i>
               <span style="margin-left: 10px">{{ formatDate(scope.row)}}</span>
             </template>
           </el-table-column>
-        <!-- 一列-->
-        <!-- 一列-->
-          <el-table-column
-            label="标题" width="130">
-            <template slot-scope="scope">
-                <div slot="reference" class="name-wrapper">
-                  <el-tag size="medium">{{ scope.row.title }}</el-tag>
-                </div>
-            </template>
-          </el-table-column>
-        <!-- 一列-->
-          <!-- 一列-->
           <el-table-column
             label="公告内容">
             <template slot-scope="scope">
-              <el-popover trigger="hover" placement="top">
-                <p>
-                  <el-tag size="medium">{{ scope.row.content }}</el-tag>
-                </p>
-                <div slot="reference" class="name-wrapper">
-                  <el-tag size="medium">{{ scope.row.content }}</el-tag>
+                <div slot="reference">
+                  <span>{{ scope.row.content }}</span>
                 </div>
-              </el-popover>
             </template>
           </el-table-column>
-          <!-- 一列-->
-        <!-- 一列-->
           <el-table-column label="操作" width="75">
             <template slot-scope="scope">
               <el-button
@@ -52,7 +31,6 @@
                 @click="handleDelete(scope.row.id,scope.$index)">删除</el-button>
             </template>
           </el-table-column>
-        <!-- 一列-->
         </el-table>
       </el-row>
       <el-row>
@@ -74,6 +52,7 @@ export default {
   /* eslint-disable */
   data () {
     return {
+      baseURL: '/api/admin/notices',
       tableData: [{
         title: '',
         show_time: 0,
@@ -85,14 +64,8 @@ export default {
   components: {
     NoticeAside
   },
-  watch: {
-    tableData: {
-      handler (val) {
-      }
-    }
-  },
   mounted () {
-    this.getNotices()
+    this.getNotices(this.baseURL)
   },
   computed () {
     this.formatDate()
@@ -122,16 +95,11 @@ export default {
     goNoticesAdd () {
       this.$router.push({name: 'NoticeAdd'})
     },
-    getNotices () {
-      this.$api.get('/api/admin/notices').then(response => {
+    getNotices (url) {
+      this.$api.get(url).then(response => {
         if (response.message === 'OK') {
           this.tableData = response.data.notices
-        } else if (response.err_code === 100201) {
-          this.$message({
-            message: '暂无公告',
-            type: 'info'
-          })
-        } else if (response.err_code === 100102 || response.err_code === 100104) {
+        }  else if (response.err_code === 100102 || response.err_code === 100104) {
             this.$message({
               message: '鉴权失败，请重新登录！',
               type: 'error'

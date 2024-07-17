@@ -1,17 +1,113 @@
 <template>
   <el-container>
     <!-- header -->
-    <el-header>
+    <el-header style="padding-left: 0;padding-right: 0">
       <!-- search -->
       <client-search></client-search>
       <!-- search -->
     </el-header>
     <!-- header -->
     <!-- main -->
-    <el-main>
+    <el-main  style="padding-left: 0;background-color: yellow;padding-right: 0">
       <el-row type="flex" justify="left">
-        这里是图书详细信息
+        <!-- pic -->
+        <el-col :span="10">
+          <el-card :shadow="'always'" :body-style="{padding: '0'}">
+            <el-image :src="BookDetail.pic_url"
+                      style="width: 100%;height:250px;padding-bottom: 0">
+            </el-image>
+          </el-card>
+        </el-col>
+        <!-- pic -->
+        <!-- message -->
+        <el-col :span="14">
+          <el-card shadow="always"
+                   style="text-align: left;margin-right: 0">
+            <div slot="header" style="text-align: left;
+            font-size: medium;margin-top: 0">
+              <span>
+                {{BookDetail.book_name}}
+              </span>
+            </div>
+            <div style="color: #8c939d;font-size: smaller;">
+              <el-row>
+                <el-col :span="6">
+                  <span>价格：</span>
+                </el-col>
+                <el-col :span="16" :offset="2">
+                  <span style="color: red">￥{{BookDetail.price}}</span>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="6">
+                  <span>图书分类：</span>
+                </el-col>
+                <el-col :span="16" :offset="2">
+                  <span style="color: black">{{BookDetail.category_name}}</span>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="6">
+                  <span>作者：</span>
+                </el-col>
+                <el-col :span="16" :offset="2">
+                  <span style="color: black">{{BookDetail.author}}</span>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="6">
+                  <span>出版社：</span>
+                </el-col>
+                <el-col :span="16" :offset="2">
+                  <span style="color: black">{{BookDetail.publisher}}</span>
+                </el-col>
+              </el-row>
+              <el-row style="margin-bottom: 23px">
+                <el-col :span="6">
+                  <span>出版日期：</span>
+                </el-col>
+                <el-col :span="16" :offset="2">
+                  <span style="color: black">{{formatDate(BookDetail.pdate)}}</span>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="11">
+                  <el-button-group>
+                    <el-button icon="el-icon-minus" size="mini">
+                    </el-button>
+                    <el-button size="mini">{{count}}</el-button>
+                    <el-button icon="el-icon-plus" size="mini">
+                    </el-button>
+                  </el-button-group>
+                </el-col>
+                <el-col :span="7">
+                  <el-button size="mini" type="danger" @click="AddCart(BookDetail.id)">加入购物车</el-button>
+                </el-col>
+                <el-col :span="6">
+                  <el-button size="mini" type="primary">立即购买</el-button>
+                </el-col>
+              </el-row>
+            </div>
+          </el-card>
+        </el-col>
+        <!-- message -->
       </el-row>
+      <!-- introduce -->
+      <el-row>
+        <el-col>
+          <el-card>
+            <div style="text-align: left;font-size: 16px;">
+              <el-tabs>
+                <el-tab-pane label="图书简介"></el-tab-pane>
+              </el-tabs>
+              <div style="font-size: 13px;text-indent: 26px">
+                <span>{{BookDetail.introduce}}</span>
+              </div>
+            </div>
+          </el-card>
+        </el-col>
+      </el-row>
+      <!-- introduce -->
     </el-main>
     <!-- main -->
   </el-container>
@@ -19,12 +115,14 @@
 
 <script>
 import ClientSearch from '../../components/client_components/client-search.vue'
+import {setCart} from '../../api/cart_storage'
+import {getUser} from '../../api/storage'
+
 export default {
   data () {
     return {
       BookDetail: {
         id: 0,
-        book_number: '',
         book_name: '',
         category_name: '',
         publisher: '',
@@ -32,19 +130,70 @@ export default {
         introduce: '',
         price: 0,
         pdate: 0,
-        pic_url: '',
-        is_new_book: false,
-        is_commended: false,
-        is_new_book_column: '',
-        is_commended_column: '',
-        in_time: 0,
-        quantity: 0,
-        sold: 0
-      }
+        pic_url: ''
+      },
+      count: 1
     }
+  },
+  mounted () {
+    this.getBookDetail()
   },
   components: {
     ClientSearch
+  },
+  computed () {
+    this.formatDate()
+  },
+  methods: {
+    AddCart (bookID) {
+      this.$api.post('api/client/carts/add/' + bookID).then(response => {
+        if (response.message === 'OK') {
+          setCart(getUser().id, bookID)
+          this.$message({
+            type: 'success',
+            message: response.data
+          })
+        } else if (response.err_code === 100102) {
+          this.$message({
+            type: 'info',
+            message: '登录后可加购'
+          })
+        } else {
+          this.$message({
+            type: 'error',
+            message: response.data
+          })
+        }
+      })
+    },
+    getBookDetail () {
+      let b = this.$route.query.bookName
+      this.$api.get('api/client/books/' + b).then(response => {
+        if (response.message === 'OK') {
+          if (response.err_code === 100204) {
+            this.$message({
+              type: 'info',
+              message: response.data
+            })
+          } else {
+            this.BookDetail = response.data.book
+          }
+        }
+      })
+    },
+    formatDate (time) {
+      if (time !== 0) {
+        let date = new Date(time)
+        let Y = date.getFullYear() + '-'
+        let M = date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) + '-' : date.getMonth() + 1 + '-'
+        let D = date.getDate() < 10 ? '0' + date.getDate() + ' ' : date.getDate() + ' '
+        return Y + M + D
+      } else {
+        return ''
+      }
+    }
   }
 }
 </script>
+<style scoped>
+</style>

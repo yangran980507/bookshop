@@ -103,7 +103,7 @@ export default {
         address: '',
         post_code: '',
         phone: '',
-        freeze: false,
+        freeze: '',
         grade: 0,
         amount: 0,
         isFrozen: ''

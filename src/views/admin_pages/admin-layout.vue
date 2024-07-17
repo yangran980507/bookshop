@@ -67,6 +67,7 @@
 </template>
 
 <script>
+import {delToken} from '../../api/storage.js'
 
 export default {
   data () {
@@ -83,9 +84,11 @@ export default {
     handleClose (key, keyPath) {
     },
     returnHome () {
+      delToken()
       this.$router.push({name: 'Home'})
     },
     returnLogin () {
+      delToken()
       this.$router.push({name: 'AdminLogin'})
     },
     goUsers () {

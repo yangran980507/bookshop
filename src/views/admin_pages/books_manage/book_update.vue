@@ -205,7 +205,7 @@ export default {
             .then(response => {
               if (response.message === 'OK') {
                 this.$message({
-                  message: response.detail,
+                  message: response.data,
                   type: 'success'
                 })
                 this.$router.push({name: 'BookDelete'})

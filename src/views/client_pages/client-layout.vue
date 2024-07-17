@@ -11,7 +11,7 @@
                   <div class="block">
                     <el-image
                       style="width: 400px; height: 60px" :src="perImg[0]"
-                      :fit="'cover'"></el-image>
+                      fit="cover"></el-image>
                   </div>
                 </el-col>
                 <!-- logoImage -->
@@ -25,7 +25,7 @@
                     <el-menu-item index="3" @click="goCategory">图书分类</el-menu-item>
                     <el-menu-item index="4" @click="goSell">销售排行</el-menu-item>
                     <el-menu-item index="5" @click="goCart">购物车</el-menu-item>
-                    <el-menu-item index="6" @click="goOrder">定单查询</el-menu-item>
+                    <el-menu-item index="6" @click="goOrder">订单查询</el-menu-item>
                     <el-menu-item index="7" @click="goAdminLogin">后台管理</el-menu-item>
                   </el-menu>
                 </el-col>
@@ -39,15 +39,15 @@
                 <!-- leftAside -->
                 <el-aside width="30%" style="background-color: #b3d8ff;
                 color: #333;text-align: center;">
-                  <!-- login -->
+                  <!-- login/person -->
                   <el-container style="margin-bottom: 20px;margin-top: 20px">
                     <el-main style="border-radius: 5px;background-color: white">
-                      <component :is="currentComponent" :message="userID"
+                      <component :is="currentComponent"
                                  @login="handleLoginMess" @signOut="handleOutMess">
                       </component>
                     </el-main>
                   </el-container>
-                  <!-- login -->
+                  <!-- login/person -->
                   <!-- notice -->
                   <el-container style="margin-bottom: 20px">
                     <el-main style="border-radius: 5px;background-color: white">
@@ -91,14 +91,14 @@ import ClientPerson from '../../components/client_components/client-person.vue'
 import ClientPoll from '../../components/client_components/client-poll.vue'
 import ClientNotice from '../../components/client_components/client-notice.vue'
 import ClientSearch from '../../components/client_components/client-search.vue'
-import { getToken } from '../../api/storage'
+import { getToken, delToken, delUser } from '../../api/storage'
 
 export default {
   data () {
     return {
       perImg: [require('../../assets/9.jpeg')],
       currentComponent: '',
-      messFromLogin: false
+      messFromLogin: ''
     }
   },
   components: {
@@ -161,6 +161,8 @@ export default {
       this.$router.push({name: 'ShoppingCart'})
     },
     goAdminLogin () {
+      delUser()
+      delToken()
       this.$router.push({name: 'AdminLogin'})
     }
   }

@@ -3,15 +3,6 @@
     <el-main>
       <el-form :model="NoticeValidation" :rules="rules" ref="NoticeValidation"
                label-width="100px" class="demo-ruleForm" size="mini">
-        <!-- 公告标题 -->
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="标题" prop="title" required>
-              <el-input v-model="NoticeValidation.title"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <!-- 公告标题 -->
         <!-- 公告内容 -->
         <el-form-item label="公告内容" prop="content" required>
           <el-input type="textarea" v-model="NoticeValidation.content"
@@ -20,7 +11,7 @@
         <!-- 公告内容 -->
         <!-- 提交/重置 -->
         <el-form-item>
-          <el-button type="primary" @click="submitForm('NoticeValidation')">即刻发布</el-button>
+          <el-button type="primary" @click="submitForm('NoticeValidation')">立刻发布</el-button>
           <el-button @click="resetForm('NoticeValidation')">重置</el-button>
         </el-form-item>
       </el-form>
@@ -38,13 +29,9 @@ export default {
   data () {
     return {
       NoticeValidation: {
-        title: '',
         content: ''
       },
       rules: {
-        title: [
-          { required: true, message: '请输入公告标题', trigger: 'blur' }
-        ],
         content: [
           { required: true, message: '请输入公告内容', trigger: 'blur' }
         ]
