@@ -3,20 +3,40 @@
   <el-aside width="200px">
     <!-- newBook -->
     <el-container style="margin-bottom: 20px;">
-      <el-main id="aside-main" style="border-radius: 5px">
-        <el-table
-          :data="recommendedBookData"
-          style="width: 100%">
-          <el-table-column
-            label="推荐图书" align="left"
-            width="400px">
-            <template slot-scope="scope">
-              <span>{{ scope.row.book_name }}</span>
-            </template>
-          </el-table-column>
-        </el-table>
-        <div v-if="resultCount === 0">
-          <el-empty ></el-empty>
+      <el-main style="background-color: yellow">
+        <div v-for="category in categories" :key="category">
+          <el-tabs type="border-card" >
+            <el-tab-pane :label="category.name">
+              <el-table
+                :data="category.books"
+                style="width: 100%">
+                <el-table-column
+                  label="书名" align="left"
+                  width="200px">
+                  <template slot-scope="scope">
+                    <el-button type="text" @click="goDetail(scope.row.book_name)">
+                      <span style="margin-left: 10px">{{ scope.row.book_name }}</span>
+                    </el-button>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                  label="出版社" align="left" width="200px">
+                  <template slot-scope="scope">
+                    <span style="margin-left: 10px">{{ scope.row.publisher }}</span>
+                  </template>
+                </el-table-column>
+                <el-table-column label="购买" align="center" width="200px">
+                  <template slot-scope="scope">
+                    <el-button
+                      size="mini" icon="el-icon-plus"
+                      @click="handleAddCart(scope.row.id)">
+                      加入购物车
+                    </el-button>
+                  </template>
+                </el-table-column>
+              </el-table>
+            </el-tab-pane>
+          </el-tabs>
         </div>
       </el-main>
     </el-container>

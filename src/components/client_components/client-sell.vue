@@ -12,7 +12,7 @@
     </el-header>
     <el-main style="background-color: white">
       <el-row :gutter="10" style="text-align: left;margin-bottom: 2px;">
-        <el-link size="mini" @click="getDetails(books[0].id)" :underline="false">
+        <el-link size="mini" @click="getDetails(books[0].book_name)" :underline="false">
           <el-col :span="5">
             <el-image style="width: 35px;height: 35px;border-radius: 2px"
                       :src=img[0] :fit="'scale-down'"></el-image>
@@ -23,7 +23,7 @@
         </el-link>
       </el-row>
       <el-row :gutter="10" style="text-align: left;margin-bottom: 2px">
-        <el-link size="mini" @click="getDetails(books[1].id)" :underline="false">
+        <el-link size="mini" @click="getDetails(books[1].book_name)" :underline="false">
           <el-col :span="5">
             <el-image style="width: 35px;height: 35px;border-radius: 2px"
                       :src=img[1] :fit="'scale-down'"></el-image>
@@ -34,7 +34,7 @@
         </el-link>
       </el-row>
       <el-row :gutter="10" style="text-align: left;margin-bottom: 2px">
-        <el-link size="mini" @click="getDetails(books[2].id)" :underline="false">
+        <el-link size="mini" @click="getDetails(books[2].book_name)" :underline="false">
           <el-col :span="5">
             <el-image style="width: 35px;height: 35px;border-radius: 2px"
                       :src=img[2] :fit="'scale-down'"></el-image>
@@ -45,7 +45,7 @@
         </el-link>
       </el-row>
       <el-row :gutter="10" style="text-align: left;margin-bottom: 2px">
-        <el-link size="mini" @click="getDetails(books[3].id)" :underline="false">
+        <el-link size="mini" @click="getDetails(books[3].book_name)" :underline="false">
           <el-col :span="5">
             <el-image style="width: 35px;height: 35px;border-radius: 2px"
                       :src=img[3] :fit="'scale-down'"></el-image>
@@ -56,7 +56,7 @@
         </el-link>
       </el-row>
       <el-row :gutter="10" style="text-align: left;margin-bottom: 2px">
-        <el-link size="mini" @click="getDetails(books[4].id)" :underline="false">
+        <el-link size="mini" @click="getDetails(books[4].book_name)" :underline="false">
           <el-col :span="5">
             <el-image style="width: 35px;height: 35px;border-radius: 2px"
                       :src=img[4] :fit="'scale-down'"></el-image>
@@ -84,19 +84,14 @@ export default {
     return {
       baseURL: 'api/client/books/by-is_new_book/5',
       books: [{
-        id: 0,
         book_name: ''
       }, {
-        id: 0,
         book_name: ''
       }, {
-        id: 0,
         book_name: ''
       }, {
-        id: 0,
         book_name: ''
       }, {
-        id: 0,
         book_name: ''
       }],
       pages: {
@@ -114,8 +109,8 @@ export default {
     this.getBooks(this.baseURL)
   },
   methods: {
-    getDetails (id) {
-      this.$router.push({name: 'ClientShowDetail'})
+    getDetails (name) {
+      this.$router.push({name: 'ClientShowDetail', query: {bookName: name}})
     },
     getBooks (url) {
       this.$api.get(url).then(response => {

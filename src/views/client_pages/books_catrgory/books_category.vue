@@ -9,9 +9,10 @@
     <!-- header -->
     <!-- main -->
     <el-main style="background-color: yellow">
-      <div v-for="category in categories" :key="category">
-        <el-tabs type="border-card" >
-          <el-tab-pane :label="category.name">
+        <el-tabs type="border-card">
+          <el-tab-pane :label="category.name"
+                       v-for="category in categories"
+                        :key="category">
             <el-table
               :data="category.books"
               style="width: 100%">
@@ -19,7 +20,9 @@
                 label="书名" align="left"
                 width="200px">
                 <template slot-scope="scope">
-                  <span style="margin-left: 10px">{{ scope.row.book_name }}</span>
+                  <el-button type="text" @click="goDetail(scope.row.book_name)">
+                    <span style="margin-left: 10px">{{ scope.row.book_name }}</span>
+                  </el-button>
                 </template>
               </el-table-column>
               <el-table-column
@@ -32,7 +35,7 @@
                 <template slot-scope="scope">
                   <el-button
                     size="mini" icon="el-icon-plus"
-                    @click="handleAddCart(scope.$index, scope.row)">
+                    @click="handleAddCart(scope.row.id)">
                     加入购物车
                   </el-button>
                 </template>
@@ -40,7 +43,6 @@
             </el-table>
           </el-tab-pane>
         </el-tabs>
-      </div>
     </el-main>
     <!-- main -->
   </el-container>
@@ -48,23 +50,15 @@
 
 <script>
 import ClientSearch from '../../../components/client_components/client-search.vue'
+import {setCart} from '../../../api/cart_storage'
+import {getUser} from '../../../api/storage'
 export default {
   data () {
     return {
-      baseURL: 'api/client/books/by-is_new_book/12',
+      baseURL: 'api/client/books/by-category',
       categories: [{
         category_id: 0,
-        name: '123',
-        books: [
-          {
-            id: 0,
-            book_name: '',
-            publisher: ''
-          }
-        ]
-      }, {
-        category_id: 0,
-        name: '456',
+        name: '',
         books: [
           {
             id: 0,
@@ -79,10 +73,39 @@ export default {
     ClientSearch
   },
   mounted () {
+    this.getCategories(this.baseURL)
   },
   methods: {
-    handleAddCart (index, row) {
-      console.log(index, row)
+    getCategories (url) {
+      this.$api.get(url).then(response => {
+        if (response.message === 'OK') {
+          this.categories = response.data.categories
+        }
+      })
+    },
+    handleAddCart (bookID) {
+      this.$api.post('api/client/carts/add/' + bookID).then(response => {
+        if (response.message === 'OK') {
+          setCart(getUser().id, bookID)
+          this.$message({
+            type: 'success',
+            message: response.data
+          })
+        } else if (response.err_code === 100102) {
+          this.$message({
+            type: 'info',
+            message: '登录后可加购'
+          })
+        } else {
+          this.$message({
+            type: 'error',
+            message: response.data
+          })
+        }
+      })
+    },
+    goDetail (name) {
+      this.$router.push({name: 'ClientShowDetail', query: {bookName: name}})
     }
   }
 }
