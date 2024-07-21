@@ -19,8 +19,8 @@
                  justify-content: space-between;
             width: 100%;padding-right: 0;margin-right: 0">
               <!-- 遍历数据 -->
-              <div v-for="book in recommendedBooks"
-                   :key="book" style="margin-bottom: 10px">
+              <div v-for="(book, index) in recommendedBooks"
+                   :key="index" style="margin-bottom: 10px">
                 <!-- 卡片 -->
                 <el-card :body-style="{padding: '0px'}"
                          :shadow="'always'" style="width: 110px">
@@ -140,7 +140,7 @@ export default {
     AddCart (bookID) {
       this.$api.post('api/client/carts/add/' + bookID).then(response => {
         if (response.message === 'OK') {
-          setCart(getUser().id, bookID)
+          setCart(getUser().id, bookID, 1)
           this.$message({
             type: 'success',
             message: response.data

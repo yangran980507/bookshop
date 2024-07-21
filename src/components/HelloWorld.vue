@@ -8,36 +8,83 @@
           <el-tabs type="border-card" >
             <el-tab-pane :label="category.name">
               <el-table
-                :data="category.books"
-                style="width: 100%">
+                :data="cartData" show-summary
+                style="width: 100%;padding-left: 0"
+                size="mini">
+                <!-- 序号 -->
                 <el-table-column
-                  label="书名" align="left"
-                  width="200px">
+                  label="序号"
+                  width="50" align="left">
                   <template slot-scope="scope">
-                    <el-button type="text" @click="goDetail(scope.row.book_name)">
-                      <span style="margin-left: 10px">{{ scope.row.book_name }}</span>
-                    </el-button>
+                    <span style="margin-left: 10px">{{ scope.$index + 1 }}</span>
                   </template>
                 </el-table-column>
+                <!-- 序号 -->
+                <!-- 书名 -->
                 <el-table-column
-                  label="出版社" align="left" width="200px">
+                  label="书名"
+                  width="210">
                   <template slot-scope="scope">
-                    <span style="margin-left: 10px">{{ scope.row.publisher }}</span>
+                    <span style="margin-left: 10px">{{ scope.row.book_name }}</span>
                   </template>
                 </el-table-column>
-                <el-table-column label="购买" align="center" width="200px">
+                <!-- 书名 -->
+                <!-- 价格 -->
+                <el-table-column
+                  label="单价(￥)" align="center"
+                  width="80">
                   <template slot-scope="scope">
-                    <el-button
-                      size="mini" icon="el-icon-plus"
-                      @click="handleAddCart(scope.row.id)">
-                      加入购物车
-                    </el-button>
+                    <span style="margin-left: 10px">{{ scope.row.price }}</span>
+                  </template>
+                </el-table-column>
+                <!-- 价格 -->
+                <!-- 总价 -->
+                <el-table-column
+                  label="总价(￥)" align="center" prop="totalAmount"
+                  width="80">
+                  <template slot-scope="scope">
+                    {{ getSum(scope.row) }}
+                  </template>
+                </el-table-column>
+                <!-- 总价 -->
+                <!-- 数量 -->
+                <el-table-column
+                  align="center" label="数量"
+                  width="140">
+                  <template slot-scope="scope">
+                    <el-input-number v-model="scope.row.amount" size="mini"
+                                     :min="1" :max="10" @click="handleChange">
+                    </el-input-number>
+                  </template>
+                </el-table-column>
+                <!-- 数量 -->
+                <el-table-column align="left">
+                  <template slot-scope="scope">
+                    <el-button-group>
+                      <el-button
+                        size="mini"
+                        icon="el-icon-delete"
+                        @click="handleDelete(scope.$index, scope.row)"></el-button>
+                      <el-button size="mini" @click="goCheckOut">结算</el-button>
+                    </el-button-group>
                   </template>
                 </el-table-column>
               </el-table>
             </el-tab-pane>
           </el-tabs>
         </div>
+        <el-row :justify="'center'" type="flex">
+          <el-col :span="14">
+            <el-card>
+              <el-button-group>
+                <el-button size="mini" type="primary" plain @click="goCheckOut">结算</el-button>
+                <el-button
+                  size="mini" type="danger" plain
+                  @click="handleFlush">清空购物车</el-button>
+              </el-button-group>
+            </el-card>
+          </el-col>
+        </el-row>
       </el-main>
     </el-container>
     <!-- newBook -->

@@ -10,7 +10,7 @@
           <el-main style="padding: 0">
             <el-carousel height="200px" trigger="click"
                          direction="vertical" :autoplay="true">
-              <el-carousel-item v-for="item in 3" :key="item" style="margin-top: 60px">
+              <el-carousel-item v-for="(item, index) in notices" :key="index" style="margin-top: 60px">
                 <!--h3 style="background-color: white">{{ item.title }}:</h3-->
                 <h3 style="background-color: white">{{ item.content }}</h3>
               </el-carousel-item>

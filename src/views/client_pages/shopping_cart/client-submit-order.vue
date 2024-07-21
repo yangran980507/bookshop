@@ -1,9 +1,27 @@
-<template>
+<template xmlns:el-col="http://www.w3.org/1999/html">
   <div>
     <el-divider content-position="left">订单提交</el-divider>
     <el-row type="flex" justify="center" style="margin-bottom: 20px">
       <el-col :span="18">
-        <el-card>收货信息</el-card>
+        <el-card>
+          <el-row type="flex" justify="left">
+            <el-input size="mini" v-model="orderSubmit.Address">
+              <template slot="prepend">收货地址：</template>
+            </el-input>
+          </el-row>
+          <el-row type="flex" justify="left" :gutter="10" style="margin-top: 3px">
+            <el-col :span="12">
+                <el-input size="mini" v-model="orderSubmit.True_name">
+                  <template slot="prepend">收件人：</template>
+                </el-input>
+            </el-col>
+            <el-col :span="12">
+               <el-input size="mini" v-model="orderSubmit.Phone">
+                 <template slot="prepend">联系电话：</template>
+                </el-input>
+            </el-col>
+          </el-row>
+        </el-card>
       </el-col>
     </el-row>
     <el-row type="flex" justify="center" style="margin-bottom: 20px">
@@ -26,26 +44,32 @@
   </div>
 </template>
 <script>
+import {getUser} from '../../../api/storage'
+
 export default {
   data () {
     return {
-      bookCart: [{
-        id: 0,
-        book_name: 'ASP工程应用与项目实践 ',
-        publisher: ' 机械工业出版社 ',
-        author: ' 陈威、白伟明、李楠 ',
-        price: 42.0,
-        amount: 2,
-        totalAmount: ''
-      }, {
-        id: 0,
-        book_name: 'ASP工程应用与项目实践 ',
-        publisher: ' 机械工业出版社 ',
-        author: ' 陈威、白伟明、李楠 ',
-        price: 41.0,
-        amount: 2,
-        totalAmount: ''
-      }]
+      orderSubmit: {
+        True_name: '',
+        Pay_way: '',
+        Address: '',
+        Phone: '',
+        Notes: '',
+        Books: [{
+          Book_id: 0,
+          Amount: 1
+        }]
+      }
+    }
+  },
+  mounted () {
+    this.getBaseMessage()
+  },
+  methods: {
+    getBaseMessage () {
+      this.orderSubmit.True_name = getUser().true_name
+      this.orderSubmit.Phone = getUser().phone
+      this.orderSubmit.Address = getUser().address
     }
   }
 }

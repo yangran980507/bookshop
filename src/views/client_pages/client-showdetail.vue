@@ -72,13 +72,10 @@
               </el-row>
               <el-row>
                 <el-col :span="11">
-                  <el-button-group>
-                    <el-button icon="el-icon-minus" size="mini">
-                    </el-button>
-                    <el-button size="mini">{{count}}</el-button>
-                    <el-button icon="el-icon-plus" size="mini">
-                    </el-button>
-                  </el-button-group>
+                  <el-input-number v-model="count" size="mini"
+                                   @change="handleChange"
+                                   :min="1" :max="10" label="描述文字">
+                  </el-input-number>
                 </el-col>
                 <el-col :span="7">
                   <el-button size="mini" type="danger" @click="AddCart(BookDetail.id)">加入购物车</el-button>
@@ -132,7 +129,7 @@ export default {
         pdate: 0,
         pic_url: ''
       },
-      count: 1
+      count: 0
     }
   },
   mounted () {
@@ -148,7 +145,7 @@ export default {
     AddCart (bookID) {
       this.$api.post('api/client/carts/add/' + bookID).then(response => {
         if (response.message === 'OK') {
-          setCart(getUser().id, bookID)
+          setCart(getUser().id, bookID, this.count)
           this.$message({
             type: 'success',
             message: response.data
@@ -191,6 +188,9 @@ export default {
       } else {
         return ''
       }
+    },
+    handleChange (val) {
+      console.log(val)
     }
   }
 }

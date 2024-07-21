@@ -22,7 +22,8 @@
           <el-row type="flex" justify="left">
             <el-col :span="8" style="color: #8c939d">电话：
             </el-col>
-            <el-col :span="16">{{user.phone}}
+            <el-col :span="16">
+              {{user.phone?user.phone.replace(/(\d{3})(\d{4})(\d{4})/,"$1****$3"):""}}
             </el-col>
           </el-row>
           <el-row type="flex" justify="left">
@@ -74,7 +75,6 @@ export default {
   methods: {
     showPersonalMessage () {
       this.user = getUser()
-      console.log(this.user)
     },
     signOut () {
       delToken()
