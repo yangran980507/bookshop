@@ -55,7 +55,7 @@ export default {
                 this.$router.push({name: 'NoticeDelete'})
               } else {
                 this.$message({
-                  message: response.response.data.data,
+                  message: response.data,
                   type: 'error'
                 })
               }

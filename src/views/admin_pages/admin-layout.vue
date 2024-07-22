@@ -101,7 +101,7 @@ export default {
       this.$router.push({name: 'BookDelete'})
     },
     goPolls () {
-      this.$router.push({name: 'PollAdd'})
+      this.$router.push({name: 'PollDelete'})
     },
     goNotices () {
       this.$router.push({name: 'NoticeDelete'})
