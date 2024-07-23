@@ -41,7 +41,6 @@ export default {
   },
   methods: {
     login () {
-      let that = this
       this.$api.post('/api/admin/auth/login', {
         LoginName: this.user_name,
         Password: this.pwd
@@ -51,7 +50,7 @@ export default {
             message: response.details,
             type: 'success'
           })
-          this.$router.push({name: 'AdminManage', query: {adminName: that.user_name}})
+          this.$router.push({name: 'AdminManage'})
         } else if (response.err_code === 100101) {
           this.$message({
             message: '登录失败: ' + Object.keys(response.data).map(key => {

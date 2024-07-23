@@ -74,7 +74,6 @@ export default {
     getPolls (url) {
       this.$api.get(url).then(response => {
         if (response.message === 'OK') {
-          console.log(response.err_code)
           if (response.err_code === 100201) {
             console.log(response.err_code)
             this.isEmpty = true

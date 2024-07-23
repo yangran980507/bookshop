@@ -15,6 +15,8 @@
         <el-col :span="8" >
           <el-button size="mini" type="primary" @click="addPoll"
                      style="float: left;margin-top: 10px">添加</el-button>
+          <el-button size="mini" type="info" @click="Return"
+                     style="float: left;margin-top: 10px">返回</el-button>
         </el-col>
        </el-row>
     </el-main>
@@ -53,10 +55,17 @@ export default {
         option_name: this.value
       }).then(response => {
         if (response.message === 'OK') {
-          this.$message({
-            message: response.data,
-            type: 'success'
-          })
+          if (response === 100206) {
+            this.$message({
+              message: response.data,
+              type: 'info'
+            })
+          } else {
+            this.$message({
+              message: response.data,
+              type: 'success'
+            })
+          }
         } else {
           this.$message({
             message: response.data,
@@ -64,6 +73,9 @@ export default {
           })
         }
       })
+    },
+    Return () {
+      this.$router.push({name: 'PollDelete'})
     }
   }
 }

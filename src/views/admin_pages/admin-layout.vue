@@ -67,7 +67,7 @@
 </template>
 
 <script>
-import {delToken} from '../../api/storage.js'
+import {delToken, getUser} from '../../api/storage.js'
 
 export default {
   data () {
@@ -110,7 +110,7 @@ export default {
       this.$router.push({name: 'OrderExecute'})
     },
     showAdmin () {
-      this.admin = this.$route.query.adminName
+      this.admin = getUser().login_name
     }
   }
 }

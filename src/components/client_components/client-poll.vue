@@ -7,20 +7,17 @@
             <el-image style="width: 100%; height: 100%" :src="pollImg[0]"
                       fit="cover"></el-image>
           </el-header>
-          <el-main style="padding: 0">
-            <el-table
-              :data="pollKeys"
-              style="width: 100%"
-              size="mini">
-              <!-- 选中 -->
-              <el-radio-group>
-                <div v-for="item in pollKeys" :key="item">
-                    <el-radio size="mini"
-                              :label="item" border>{{item}}</el-radio>
-                </div>
-              </el-radio-group>
-              <!--  操作 -->
-            </el-table>
+          <el-main>
+            <el-radio-group v-model="checkedPoll">
+              <el-row type="flex" justify="left">
+                <el-col :span="1" :offset="5">
+                  <el-radio v-for="(poll,index) in pollData"
+                            :label="poll.option_name" :key="index">
+                    <span>{{poll.option_name}}</span>
+                  </el-radio>
+                </el-col>
+              </el-row>
+            </el-radio-group>
             <div style="padding-top: 20px">
               <el-row>
                 <el-col :span="20" :offset="2">
@@ -41,18 +38,25 @@
 export default {
   data () {
     return {
+      baseURL: 'api/client/polls',
       pollImg: [require('../../assets/28.jpeg')],
-      pollKeys: []
+      pollData: [{
+        option_name: '',
+        count: 0,
+        time: 0
+      }],
+      // 选中数据
+      checkedPoll: ''
     }
   },
   mounted () {
-    this.getPollOptions()
+    this.getPollOptions(this.baseURL)
   },
   methods: {
-    getPollOptions () {
-      this.$api.get('api/client/polls/keys').then(response => {
+    getPollOptions (url) {
+      this.$api.get(url).then(response => {
         if (response.message === 'OK') {
-          this.pollKeys = response.data.pollKeys
+          this.pollData = response.data.polls
         }
       })
     },
@@ -60,6 +64,21 @@ export default {
       this.$router.push({name: 'ClientShowPollResult'})
     },
     vote () {
+      this.$api.put('/api/client/polls/vote', {
+        option_name: this.checkedPoll
+      }).then(response => {
+        if (response.message === 'OK') {
+          this.$message({
+            type: 'success',
+            message: response.data
+          })
+        } else {
+          this.$message({
+            type: 'error',
+            message: response.data
+          })
+        }
+      })
     }
   }
 }
