@@ -11,8 +11,8 @@
     <el-main style="background-color: yellow">
         <el-tabs type="border-card">
           <el-tab-pane :label="category.name"
-                       v-for="category in categories"
-                        :key="category">
+                       v-for="(category,index) in categories"
+                        :key="index">
             <el-table
               :data="category.books"
               style="width: 100%">

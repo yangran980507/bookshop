@@ -85,7 +85,7 @@
 </template>
 <script>
 import {getUser} from '../../api/storage'
-import {clearCart, delCart, getCart, setCart} from '../../api/cart_storage'
+import {clearCart, delCart, flushOrders, getCart, setCart, setOrders} from '../../api/cart_storage'
 
 export default {
   data () {
@@ -153,6 +153,9 @@ export default {
         })
         return
       }
+      let uid = getUser().id
+      flushOrders(uid)
+      setOrders(uid, this.checkedCart)
       this.$router.push({name: 'ClientSubmitOrder'})
     },
     // 删除
@@ -225,8 +228,10 @@ export default {
     // 切换管理
     changeStatus () {
       if (this.payOrDelete === '完成') {
+        this.key++
         this.payOrDelete = '管理'
       } else if (this.payOrDelete === '管理') {
+        this.key++
         this.payOrDelete = '完成'
       }
     }

@@ -140,7 +140,6 @@ export default {
       this.messFromLogin = message
     },
     handleSelect (key, keyPath) {
-      console.log(key, keyPath)
     },
     goRem () {
       this.$router.push({name: 'RecommendedBooks'})
