@@ -1,6 +1,7 @@
 <template xmlns:el-col="http://www.w3.org/1999/html">
   <div>
     <el-divider content-position="left">订单提交</el-divider>
+    <!-- 个人信息 -->
     <el-row type="flex" justify="center" style="margin-bottom: 20px">
       <el-col :span="18">
         <el-card>
@@ -11,7 +12,7 @@
           </el-row>
           <el-row type="flex" justify="left" :gutter="10" style="margin-top: 3px">
             <el-col :span="12">
-                <el-input size="mini" v-model="orderSubmit.True_name">
+                <el-input size="mini" v-model="orderSubmit.Login_name">
                   <template slot="prepend">收件人：</template>
                 </el-input>
             </el-col>
@@ -24,6 +25,7 @@
         </el-card>
       </el-col>
     </el-row>
+    <!-- 订单信息 -->
     <el-row type="flex" justify="center" style="margin-bottom: 20px">
       <el-col :span="18">
         <div v-for="(single, index) in orderSubmit.Books" :key="index"
@@ -57,6 +59,43 @@
         </div>
       </el-col>
     </el-row>
+    <!-- 支付信息 -->
+    <el-row type="flex" justify="center" style="margin-bottom: 20px">
+      <el-col :span="18">
+        <el-card>
+          <el-row type="flex" justify="left">
+            <el-col :span="12">
+              <el-select v-model="orderSubmit.Carry"
+                         clearable placeholder="请选择邮寄方式">
+                <el-option
+                  v-for="(item,index) in carryOptions"
+                  :key="index"
+                  :value="item.val">
+                </el-option>
+              </el-select>
+            </el-col>
+            <el-col :span="12">
+              <el-select v-model="orderSubmit.Pay_way"
+                         clearable placeholder="请选择支付方式">
+                <el-option
+                  v-for="(item,index) in payOptions"
+                  :key="index"
+                  :value="item.val">
+                </el-option>
+              </el-select>
+            </el-col>
+          </el-row>
+          <el-row type="flex" justify="center" style="margin-top: 5px">
+            <el-col :span="23">
+              <el-input size="mini" placeholder="留言：" maxlength="50" show-word-limit
+                        type="textarea" v-model="orderSubmit.Notes">
+              </el-input>
+            </el-col>
+          </el-row>
+        </el-card>
+      </el-col>
+    </el-row>
+    <!-- 订单提交 -->
     <el-row type="flex" justify="center" style="margin-bottom: 20px">
       <el-col :span="18">
         <el-card>
@@ -87,7 +126,7 @@ export default {
   data () {
     return {
       orderSubmit: {
-        True_name: '',
+        Login_name: '',
         Pay_way: '',
         Carry: '',
         Address: '',
@@ -103,7 +142,21 @@ export default {
           Amount: 0
         }]
       },
-      totalAmount: 0
+      totalAmount: 0,
+      payOptions: [{
+        val: '银行卡支付'
+      }, {
+        val: '微信支付'
+      }, {
+        val: '支付宝支付'
+      }],
+      carryOptions: [{
+        val: '普通邮寄'
+      }, {
+        val: '特快邮寄'
+      }, {
+        val: 'EMS专递'
+      }]
     }
   },
   mounted () {
@@ -112,7 +165,7 @@ export default {
   methods: {
     getBaseMessage () {
       let user = getUser()
-      this.orderSubmit.True_name = user.true_name
+      this.orderSubmit.Login_name = user.login_name
       this.orderSubmit.Phone = user.phone
       this.orderSubmit.Address = user.address
       this.orderSubmit.Books = getOrders(user.id)
@@ -130,7 +183,15 @@ export default {
             message: response.data
           })
           flushOrders(getUser().id)
-
+          this.$router.push({name: 'ShoppingCart'})
+        } else if (response.err_code === 100101) {
+          let val = Object.keys(response.data).map(key => {
+            return response.data[key]
+          })
+          this.$message({
+            type: 'error',
+            message: val + ''
+          })
         }
       })
     }

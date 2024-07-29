@@ -24,11 +24,21 @@ export const setOrders = (uid, books) => {
 }
 
 // 获取订单数据
-export const getOrders = (uid, books) => {
+export const getOrders = (uid) => {
   return JSON.parse(sessionStorage.getItem(uid))
 }
 
 // 清空订单数据
 export const flushOrders = (uid) => {
   sessionStorage.removeItem(uid)
+}
+
+// 存储订单详细数据
+export const setOrderDetail = (uid, bookDetail) => {
+  sessionStorage.setItem(uid + ':bookDetail:', JSON.stringify(bookDetail))
+}
+
+// 获取订单详细数据
+export const getOrderDetail = (uid) => {
+  return JSON.parse(sessionStorage.getItem(uid + ':bookDetail:'))
 }

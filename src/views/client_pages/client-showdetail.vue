@@ -22,7 +22,7 @@
         <!-- message -->
         <el-col :span="14">
           <el-card shadow="always"
-                   style="text-align: left;margin-right: 0">
+                   style="text-align: left;margin-right: 0;">
             <div slot="header" style="text-align: left;
             font-size: medium;margin-top: 0">
               <span>
@@ -35,7 +35,7 @@
                   <span>价格：</span>
                 </el-col>
                 <el-col :span="16" :offset="2">
-                  <span style="color: red">￥{{BookDetail.price}}</span>
+                  <span style="color: red"><span style="color: white">中</span>￥{{BookDetail.price}}</span>
                 </el-col>
               </el-row>
               <el-row>
@@ -43,7 +43,7 @@
                   <span>图书分类：</span>
                 </el-col>
                 <el-col :span="16" :offset="2">
-                  <span style="color: black">{{BookDetail.category_name}}</span>
+                  <span style="color: black"><span style="color: white">中</span>{{BookDetail.category_name}}</span>
                 </el-col>
               </el-row>
               <el-row>
@@ -51,7 +51,7 @@
                   <span>作者：</span>
                 </el-col>
                 <el-col :span="16" :offset="2">
-                  <span style="color: black">{{BookDetail.author}}</span>
+                  <span style="color: black"><span style="color: white">中</span>{{BookDetail.author}}</span>
                 </el-col>
               </el-row>
               <el-row>
@@ -59,22 +59,30 @@
                   <span>出版社：</span>
                 </el-col>
                 <el-col :span="16" :offset="2">
-                  <span style="color: black">{{BookDetail.publisher}}</span>
+                  <span style="color: black"><span style="color: white">中</span>{{BookDetail.publisher}}</span>
                 </el-col>
               </el-row>
-              <el-row style="margin-bottom: 23px">
+              <el-row>
                 <el-col :span="6">
                   <span>出版日期：</span>
                 </el-col>
                 <el-col :span="16" :offset="2">
-                  <span style="color: black">{{formatDate(BookDetail.pdate)}}</span>
+                  <span style="color: black"><span style="color: white">中</span>{{formatDate(BookDetail.pdate)}}</span>
+                </el-col>
+              </el-row>
+              <el-row style="margin-bottom: 9px">
+                <el-col :span="6">
+                  <span>剩余：</span>
+                </el-col>
+                <el-col :span="16" :offset="2">
+                  <span style="color: black"><span style="color: white">中</span>{{BookDetail.quantity}}</span>
                 </el-col>
               </el-row>
               <el-row>
                 <el-col :span="11">
                   <el-input-number v-model="count" size="mini"
                                    @change="handleChange"
-                                   :min="1" :max="10" label="描述文字">
+                                   :min="1" :max="10">
                   </el-input-number>
                 </el-col>
                 <el-col :span="7">
@@ -114,6 +122,7 @@
 import ClientSearch from '../../components/client_components/client-search.vue'
 import {setCart} from '../../api/cart_storage'
 import {getUser} from '../../api/storage'
+import {formatDate} from '../../api/public'
 
 export default {
   data () {
@@ -127,7 +136,8 @@ export default {
         introduce: '',
         price: 0,
         pdate: 0,
-        pic_url: ''
+        pic_url: '',
+        quantity: 0
       },
       count: 0
     }
@@ -138,10 +148,8 @@ export default {
   components: {
     ClientSearch
   },
-  computed () {
-    this.formatDate()
-  },
   methods: {
+    formatDate,
     AddCart (bookID) {
       this.$api.post('api/client/carts/add/' + bookID).then(response => {
         if (response.message === 'OK') {
@@ -178,19 +186,7 @@ export default {
         }
       })
     },
-    formatDate (time) {
-      if (time !== 0) {
-        let date = new Date(time)
-        let Y = date.getFullYear() + '-'
-        let M = date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) + '-' : date.getMonth() + 1 + '-'
-        let D = date.getDate() < 10 ? '0' + date.getDate() + ' ' : date.getDate() + ' '
-        return Y + M + D
-      } else {
-        return ''
-      }
-    },
     handleChange (val) {
-      console.log(val)
     }
   }
 }

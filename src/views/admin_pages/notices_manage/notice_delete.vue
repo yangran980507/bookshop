@@ -12,7 +12,7 @@
             width="130">
             <template slot-scope="scope">
               <i class="el-icon-time"></i>
-              <span style="margin-left: 10px">{{ formatDate(scope.row)}}</span>
+              <span style="margin-left: 10px">{{ formatDate(scope.row.show_time)}}</span>
             </template>
           </el-table-column>
           <el-table-column
@@ -48,6 +48,7 @@
 </template>
 <script>
 import NoticeAside from '../../../components/admin_components/NoticeAside.vue'
+import {formatDate} from '../../../api/public'
 export default {
   /* eslint-disable */
   data () {
@@ -71,6 +72,7 @@ export default {
     this.formatDate()
   },
   methods: {
+    formatDate,
     handleDelete (id, index) {
       this.$api.del('/api/admin/notices/delete/' + id).then(response => {
           if (response.message === 'OK') {
@@ -106,17 +108,6 @@ export default {
             })
         }
       })
-    },
-    formatDate (row) {
-      if (row.show_time !== 0) {
-        let date = new Date(parseInt(row.show_time) * 1000);
-        let Y = date.getFullYear() + '-';
-        let M = date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) + '-' : date.getMonth() + 1 + '-';
-        let D = date.getDate() < 10 ? '0' + date.getDate() + ' ' : date.getDate() + ' ';
-        return Y + M + D ;
-      } else {
-        return ''
-      }
     }
   }
 }

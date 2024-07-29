@@ -20,6 +20,7 @@ import BooksSell from '@/views/client_pages/books_sell/books_sell.vue'
 import BooksOrder from '@/views/client_pages/books_order/books_order.vue'
 import BooksCategory from '@/views/client_pages/books_catrgory/books_category.vue'
 import ShoppingCart from '@/views/client_pages/shopping_cart/shopping_cart.vue'
+import BooksOrderDetail from '@/views/client_pages/books_order/books_order_detail.vue'
 import ClientSignup from '../views/client_pages/client-signup.vue'
 import ClientShowSearch from '../views/client_pages/client-showsearch.vue'
 import ClientShowDetail from '../views/client_pages/client-showdetail.vue'
@@ -101,6 +102,11 @@ export default new Router({
           path: '/client-submit-order',
           name: 'ClientSubmitOrder',
           component: ClientSubmitOrder
+        },
+        {
+          path: '/books-order-detail',
+          name: 'BooksOrderDetail',
+          component: BooksOrderDetail
         }
       ]
     },

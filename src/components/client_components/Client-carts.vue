@@ -36,11 +36,11 @@
                   <el-row justify="left" type="flex" style="margin-top: 10px">
                     <el-col :span="12">
                       <span style="font-size: 12px;color: red">
-                        ￥<span style="font-size: 16px">{{cart.price}}</span>
+                        ￥<span style="font-size: 16px">{{cart.price}}<span style="color: white">中</span></span>
                       </span>
                     </el-col>
                     <el-col :span="12">
-                      <el-input-number size="mini" :min="1" :max="10"
+                      <el-input-number size="mini" :min="1" :max="cart.quantity"
                                        @change="handleChange(index,amount[index])"
                                        v-model="amount[index]"></el-input-number>
                     </el-col>
@@ -99,7 +99,8 @@ export default {
         price: 0,
         pic_url: '',
         publisher: '',
-        author: ''
+        author: '',
+        quantity: 0
       }],
       // 选中数据
       checkedCart: [],
@@ -167,8 +168,11 @@ export default {
         })
         return
       }
-      this.$api.postSpecial('api/client/carts/remove', {
-        Books: this.checkedCart
+      let bookIDs = []
+      for (let i = 0; i < this.checkedCart.length; i++) {
+        bookIDs[i] = this.checkedCart[i].id
+      }
+      this.$api.postSpecial('api/client/carts/remove', {book_id: bookIDs
       }).then(response => {
         if (response.message === 'OK') {
           // 成功
