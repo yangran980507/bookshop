@@ -1,7 +1,10 @@
 <template>
   <el-container>
     <el-main>
-      <el-row>
+      <div v-if="empty === true">
+        <el-empty description="暂无公告"></el-empty>
+      </div>
+      <el-row v-if="empty === false">
         <el-table
           :data="tableData"
           style="width: 100%"
@@ -59,7 +62,8 @@ export default {
         show_time: 0,
         content: '',
         id: 0
-      }]
+      }],
+      empty: true
     }
   },
   components: {
@@ -67,9 +71,6 @@ export default {
   },
   mounted () {
     this.getNotices(this.baseURL)
-  },
-  computed () {
-    this.formatDate()
   },
   methods: {
     formatDate,
@@ -80,7 +81,7 @@ export default {
               message: response.data,
               type: 'success'
             })
-            this.tableData.splice(index, 1)
+            this.getNotices(this.baseURL)
           } else if (response.err_code === 100102 || response.err_code === 100104) {
             this.$message({
               message: '鉴权失败，请重新登录！',
@@ -100,12 +101,20 @@ export default {
     getNotices (url) {
       this.$api.get(url).then(response => {
         if (response.message === 'OK') {
+          this.empty = false
           this.tableData = response.data.notices
-        }  else if (response.err_code === 100102 || response.err_code === 100104) {
-            this.$message({
-              message: '鉴权失败，请重新登录！',
-              type: 'error'
-            })
+        } else if (response.err_code === 100201) {
+          this.empty = true
+        } else if (response.err_code === 100102 || response.err_code === 100104) {
+          this.$message({
+            message: '鉴权失败，请重新登录！',
+            type: 'error'
+          })
+        } else {
+          this.$message({
+            message: response.data,
+            type: 'error'
+          })
         }
       })
     }

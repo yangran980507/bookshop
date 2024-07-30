@@ -192,6 +192,11 @@ export default {
             type: 'error',
             message: val + ''
           })
+        } else {
+          this.$message({
+            type: 'error',
+            message: response.data
+          })
         }
       })
     }

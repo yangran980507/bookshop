@@ -74,30 +74,26 @@ export default {
     getPolls (url) {
       this.$api.get(url).then(response => {
         if (response.message === 'OK') {
-          if (response.err_code === 100201) {
-            console.log(response.err_code)
-            this.isEmpty = true
-            console.log(this.isEmpty)
-          } else {
-            this.isEmpty = false
-            this.tableData = response.data.polls
-          }
+          this.isEmpty = false
+          this.tableData = response.data.polls
         } else if (response.err_code === 100102 || response.err_code === 100104) {
           this.$message({
             message: '鉴权失败，请重新登录！',
             type: 'error'
           })
+        } if (response.err_code === 100201) {
+          this.isEmpty = true
         }
       })
     },
     handleDelete (name) {
       this.$api.del('/api/admin/polls/' + name + '/delete').then(response => {
         if (response.message === 'OK') {
-          this.getPolls(this.baseURL)
           this.$message({
             message: response.data,
             type: 'success'
           })
+          this.getPolls(this.baseURL)
         } else if (response.err_code === 100102 || response.err_code === 100104) {
           this.$message({
             message: '鉴权失败，请重新登录！',

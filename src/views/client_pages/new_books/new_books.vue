@@ -14,7 +14,7 @@
            style="width: 100%">
            <el-table-column
              label="编号" align="left"
-             width="80px">
+             width="50px">
              <template slot-scope="scope">
                <span style="margin-left: 10px">{{ scope.$index + 1 }}</span>
              </template>

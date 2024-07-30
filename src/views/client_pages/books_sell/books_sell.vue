@@ -14,7 +14,7 @@
         style="width: 100%">
         <el-table-column
           label="编号" align="left"
-          width="80px">
+          width="50px">
           <template slot-scope="scope">
             <span style="margin-left: 10px">{{ scope.$index + 1 }}</span>
           </template>
@@ -29,9 +29,15 @@
           </template>
         </el-table-column>
         <el-table-column
-          label="出版社" align="left" width="200px">
+          label="作者" align="left" width="140px">
           <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.publisher }}</span>
+            <span style="margin-left: 10px">{{ scope.row.author }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column
+          label="销量" align="left" width="50px">
+          <template slot-scope="scope">
+            <span style="margin-left: 10px">{{ scope.row.sold }}</span>
           </template>
         </el-table-column>
         <el-table-column label="购买" align="center" width="200px">

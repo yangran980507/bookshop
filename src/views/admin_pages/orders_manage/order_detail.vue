@@ -55,6 +55,14 @@
                         <span style="color: black"><span style="color: white">中</span>{{order.address}}</span>
                       </el-col>
                     </el-row>
+                    <el-row>
+                      <el-col :span="6">
+                        <span>用户留言：</span>
+                      </el-col>
+                      <el-col :span="16" :offset="2">
+                        <span style="color: black"><span style="color: white">中</span>{{order.notes}}</span>
+                      </el-col>
+                    </el-row>
                     <el-row style="margin-bottom: 20px">
                       <el-col :span="6">
                         <span>购买数量：</span>
@@ -142,7 +150,8 @@ export default {
         refund_explain: '',
         enforce: '',
         phone: '',
-        address: ''
+        address: '',
+        notes: ''
       }
     }
   },

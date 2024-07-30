@@ -1,6 +1,10 @@
 <template>
   <el-container>
     <el-main>
+      <div v-if="empty === true">
+        <el-empty description="暂无用户"></el-empty>
+      </div>
+      <div v-if="empty === false">
       <el-table
         :data="tableData"
         style="width: 100%"
@@ -85,6 +89,7 @@
           </el-col>
         </el-row>
       </div>
+      </div>
     </el-main>
     <el-aside>
      <user-aside></user-aside>
@@ -115,7 +120,8 @@ export default {
         FirstPageURL: this.baseURL,
         LastPageURL: this.baseURL
       },
-      baseURL: '/api/admin/users'
+      baseURL: '/api/admin/users',
+      empty: true
     }
   },
   components: {
@@ -158,6 +164,7 @@ export default {
     getUsers (url) {
       this.$api.get(url).then(response => {
         if (response.message === 'OK') {
+          this.empty = false
           this.tableData = response.data.users
           for (let i = 0; i < this.tableData.length; i++) {
             if (this.tableData[i].freeze === false) {
@@ -172,6 +179,8 @@ export default {
             message: '鉴权失败，请重新登录！',
             type: 'error'
           })
+        } else if (response.err_code === 100201) {
+          this.empty = true
         }
       })
     },
@@ -189,11 +198,5 @@ export default {
 #pages{
   margin-top: 20px;
   padding-top: 20px;
-}
- .el-table .warning-row {
-   background: oldlace;
- }
-.el-table .success-row {
-  background: #f0f9eb;
 }
 </style>
