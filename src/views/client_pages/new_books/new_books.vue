@@ -8,7 +8,7 @@
    </el-header>
    <!-- header -->
    <!-- main -->
-   <el-main style="background-color: yellow">
+   <el-main>
          <el-table
            :data="newBookData"
            style="width: 100%">

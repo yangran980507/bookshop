@@ -1,7 +1,6 @@
 <template>
   <div>
-    <el-divider content-position="left">我的订单</el-divider>
-    <div v-if="empty">
+    <div v-if="empty === true">
       <el-empty description="暂无订单"></el-empty>
     </div>
     <div v-if="empty === false">
@@ -79,25 +78,25 @@
 <style scoped>
 </style>
 <script >
-import {formatDateToSecond} from '../../../api/public'
-import {setOrderDetail} from '../../../api/cart_storage'
-import {getUser} from '../../../api/storage'
+import {formatDateToSecond} from '../../api/public'
+import {setOrderDetail} from '../../api/cart_storage'
+import {getUser} from '../../api/storage'
 
 export default {
   data () {
     return {
       baseURL: 'api/client/orders',
       ordersData: [{
+        id: 0,
         login_name: '',
         pay_way: '',
         carry: '',
         order_detail_id: 0,
         date: 0,
-        refund: false,
         refund_explain: '',
         enforce: ''
       }],
-      empty: false
+      empty: true
     }
   },
   mounted () {
@@ -108,7 +107,12 @@ export default {
     getOrders (url) {
       this.$api.get(url).then(response => {
         if (response.message === 'OK') {
-          this.ordersData = response.data.orders
+          if (response.err_code === 100201) {
+            this.empty = true
+          } else {
+            this.empty = false
+            this.ordersData = response.data.orders
+          }
         }
       })
     },

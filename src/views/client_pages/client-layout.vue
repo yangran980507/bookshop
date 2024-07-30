@@ -37,8 +37,7 @@
             <el-main style="padding-top: 0;padding-bottom: 0">
               <el-container>
                 <!-- leftAside -->
-                <el-aside width="30%" style="background-color: #b3d8ff;
-                color: #333;text-align: center;">
+                <el-aside width="30%" style="color: #333;text-align: center;">
                   <!-- login/person -->
                   <el-container style="margin-bottom: 20px;margin-top: 20px">
                     <el-main style="border-radius: 5px;background-color: white">
@@ -64,8 +63,7 @@
                   <!-- poll -->
                 </el-aside>
                 <!-- leftAside -->
-                <el-main style="background-color: peachpuff;
-                margin-bottom: 20px;padding-right: 0">
+                <el-main style=" margin-bottom: 20px;padding-right: 0">
                   <router-view :message="messFromLogin"></router-view>
                 </el-main>
               </el-container>

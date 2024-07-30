@@ -8,7 +8,7 @@
     </el-header>
     <!-- header -->
     <!-- main -->
-    <el-main  style="padding-left: 0;background-color: yellow;padding-right: 0">
+    <el-main  style="padding-left: 0;padding-right: 0">
       <el-row type="flex" justify="left">
         <!-- pic -->
         <el-col :span="10">

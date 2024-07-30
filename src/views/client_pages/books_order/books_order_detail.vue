@@ -13,6 +13,8 @@
               <span>
                 {{book.book_name}}
               </span>
+            <el-button size="mini" @click="returnOrderList" type="text"
+                       style="float: right">返回</el-button>
           </div>
           <div>
             <el-row style="margin-bottom: 5px">
@@ -69,12 +71,12 @@
                       <span style="color: black"><span style="color: white">中</span>x{{bookAmount.buy_count}}</span>
                     </el-col>
                   </el-row>
-                  <el-row v-if="order.refund === true">
+                  <el-row v-if="order.enforce === '已取消订单'">
                     <el-col :span="7">
                       <el-tag size="mini" type="info">订单已取消</el-tag>
                     </el-col>
                   </el-row>
-                  <el-row v-if="order.refund === false">
+                  <el-row v-if="order.enforce !== '已取消订单'">
                     <el-col :span="7">
                       <el-button size="mini" @click="BookRefund">申请售后</el-button>
                     </el-col>
@@ -94,7 +96,8 @@
                   </el-form-item>
                 </el-form>
               </el-col>
-              <el-button size="mini" @click="BookRefundSubmit('order')" style="float: right">提交申请</el-button>
+              <el-button size="mini" @click="BookRefundSubmit('order')"
+                         style="float: right">提交申请</el-button>
             </el-row>
             <!-- 退货理由-->
           </div>
@@ -134,7 +137,6 @@ export default {
         carry: '',
         order_detail_id: 0,
         date: 0,
-        refund: false,
         refund_explain: '',
         enforce: ''
       },
@@ -154,7 +156,6 @@ export default {
     formatDate,
     getOrder () {
       this.order = getOrderDetail(getUser().id)
-      this.order.refund = this.order.enforce === '订单已取消'
     },
     getBookMessage (url) {
       this.$api.get(url + this.order.order_detail_id).then(response => {
@@ -169,6 +170,9 @@ export default {
     BookRefund () {
       this.IsRefund = true
     },
+    returnOrderList () {
+      this.$router.push({name: 'BooksOrder'})
+    },
     BookRefundSubmit (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
@@ -178,6 +182,8 @@ export default {
           }).then(response => {
             if (response.message === 'OK') {
               this.$alert('请求已提交，将尽快处理你的请求,或者可拨打下方联系电话处理!')
+            } else if (response.err_code === 100207) {
+              this.$alert('订单已执行，可以通过下方联系电话联系管理员处理!')
             } else {
               this.$message({
                 type: 'error',

@@ -2,17 +2,15 @@
     <!-- main -->
     <el-container>
       <!-- search -->
-      <el-header style="border-radius: 5px;padding: 0;
-      background-color: #B3C0D1" height="40px">
+      <el-header style="border-radius: 5px;padding: 0;" height="40px">
         <client-search></client-search>
       </el-header>
       <!-- search -->
       <!-- main -->
-      <el-main style="background-color: yellow;padding-right: 0;padding-left: 0">
+      <el-main style="padding-right: 0;padding-left: 0">
         <el-container>
           <!-- recommend -->
-          <el-main style="border-radius: 5px;padding-top: 0;
-            background-color: pink">
+          <el-main style="border-radius: 5px;padding-top: 0;">
             <el-divider content-position="left">推荐图书</el-divider>
             <!-- 容器 flex 布局 -->
             <div style="display: flex;flex-wrap: wrap;
@@ -58,7 +56,7 @@
           </el-main>
           <!-- recommend -->
       <!-- rightAside -->
-          <el-aside width="37%" style="border-radius: 5px;background-color: gold">
+          <el-aside width="37%" style="border-radius: 5px">
             <!-- newBook -->
            <el-container style="margin-top: 0">
              <el-main style="margin-bottom: 20px;padding: 0;border-radius: 5px">

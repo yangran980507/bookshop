@@ -12,7 +12,7 @@
 </template>
 <script>
 import ClientUnload from '../../../components/client_components/client-unload.vue'
-import ClientCarts from '../../../components/client_components/Client-carts.vue'
+import ClientCarts from '../../../components/client_components/client-carts.vue'
 import {getToken} from '../../../api/storage'
 
 export default {

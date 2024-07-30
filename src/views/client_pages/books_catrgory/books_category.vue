@@ -8,7 +8,7 @@
     </el-header>
     <!-- header -->
     <!-- main -->
-    <el-main style="background-color: yellow">
+    <el-main>
         <el-tabs type="border-card">
           <el-tab-pane :label="category.name"
                        v-for="(category,index) in categories"

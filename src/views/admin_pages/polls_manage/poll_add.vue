@@ -3,10 +3,10 @@
     <el-main>
       <el-row :gutter="20" style="margin-top: 50px">
         <el-col :span="16">
-          <el-select v-model="value" placeholder="请选择投票项" style="float: right">
+          <el-select v-model="value" placeholder="请选择投票项" style="float: right" clearable>
             <el-option
-              v-for="item in categories"
-              :key="item.name"
+              v-for="(item,index) in categories"
+              :key="index"
               :value="item.name">
               <span style="float: right; color: #8492a6; font-size: 13px">{{ item.name }}</span>
             </el-option>

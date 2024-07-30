@@ -8,7 +8,7 @@
     </el-header>
     <!-- header -->
     <!-- main -->
-    <el-main style="background-color: yellow">
+    <el-main>
       <el-divider content-position="left">
         <span>共查询到 {{resultCount}} 条结果,查询关键字：『 {{search}} 』</span>
       </el-divider>

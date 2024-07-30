@@ -11,23 +11,22 @@ import PollDelete from '@/views/admin_pages/polls_manage/poll_delete.vue'
 import NoticeAdd from '@/views/admin_pages/notices_manage/notice_add.vue'
 import NoticeDelete from '@/views/admin_pages/notices_manage/notice_delete.vue'
 import OrderExecute from '@/views/admin_pages/orders_manage/order_execute.vue'
+import OrderDetail from '@/views/admin_pages/orders_manage/order_detail.vue'
 import AdminLogin from '@/views/admin_pages/admin_login.vue'
 
 import Home from '@/views/client_pages/client-layout.vue'
 import RecommendedBooks from '@/views/client_pages/recommended_books/recommended_books.vue'
 import NewBooks from '@/views/client_pages/new_books/new_books.vue'
 import BooksSell from '@/views/client_pages/books_sell/books_sell.vue'
-import BooksOrder from '@/views/client_pages/books_order/books_order.vue'
+import BooksOrder from '@/views/client_pages/books_order/order_page_choose.vue'
 import BooksCategory from '@/views/client_pages/books_catrgory/books_category.vue'
-import ShoppingCart from '@/views/client_pages/shopping_cart/shopping_cart.vue'
+import ShoppingCart from '@/views/client_pages/shopping_cart/cart_page_choose.vue'
 import BooksOrderDetail from '@/views/client_pages/books_order/books_order_detail.vue'
 import ClientSignup from '../views/client_pages/client-signup.vue'
 import ClientShowSearch from '../views/client_pages/client-showsearch.vue'
 import ClientShowDetail from '../views/client_pages/client-showdetail.vue'
 import ClientShowPollResult from '../views/client_pages/client-showpollresult.vue'
 import ClientSubmitOrder from '../views/client_pages/shopping_cart/client-submit-order.vue'
-
-import HelloWorld from '@/components/HelloWorld.vue'
 Vue.use(Router)
 
 const originalPush = Router.prototype.push
@@ -38,11 +37,7 @@ Router.prototype.push = function push (location) {
 export default new Router({
   routes: [
     {
-      path: '/hello',
-      name: 'HelloWorld',
-      component: HelloWorld
-    },
-    {
+      // 用户组路由
       path: '/home',
       name: 'Home',
       component: Home,
@@ -111,6 +106,7 @@ export default new Router({
       ]
     },
     {
+      // 管理员路由
       path: '/admin-login',
       name: 'AdminLogin',
       component: AdminLogin
@@ -165,6 +161,11 @@ export default new Router({
           path: '/order-execute',
           name: 'OrderExecute',
           component: OrderExecute
+        },
+        {
+          path: '/order-detail',
+          name: 'OrderDetail',
+          component: OrderDetail
         }
       ]
     }

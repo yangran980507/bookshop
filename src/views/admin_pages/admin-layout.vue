@@ -1,5 +1,5 @@
 <template>
-    <el-container class="el-container" style="margin-top: 50px;">
+    <el-container class="el-container" style="margin-top: 50px;background-color: #E9EEF3 ">
       <!-- header -->
       <el-header class="header" height="40px">
           <el-col :span="18"><div class="grid-content bg-blue">图书管理系统</div></el-col>

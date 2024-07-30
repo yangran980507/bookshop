@@ -10,9 +10,8 @@
           <el-main style="padding: 0">
             <el-carousel height="200px" trigger="click"
                          direction="vertical" :autoplay="true">
-              <el-carousel-item v-for="(item, index) in notices" :key="index" style="margin-top: 60px">
-                <!--h3 style="background-color: white">{{ item.title }}:</h3-->
-                <h3 style="background-color: white">{{ item.content }}</h3>
+              <el-carousel-item v-for="(item, index) in notices" :key="index">
+                <h3>{{ item.content }}</h3>
               </el-carousel-item>
             </el-carousel>
           </el-main>
@@ -48,12 +47,9 @@ export default {
   color: #475669;
   font-size: 14px;
   opacity: 0.75;
-  margin: 0;
+  margin: 60px;
 }
-.el-carousel__item:nth-child(2n) {
+.el-carousel__item {
   background-color: #99a9bf;
-}
-.el-carousel__item:nth-child(2n+1) {
-  background-color:  #b3d8ff;
 }
 </style>
