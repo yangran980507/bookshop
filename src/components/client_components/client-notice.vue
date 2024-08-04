@@ -33,7 +33,7 @@ export default {
   },
   methods: {
     getNotices () {
-      this.$api.get('api/client/notices').then(response => {
+      this.$api.get('/api/client/notices').then(response => {
         if (response.message === 'OK') {
           this.notices = response.data.notices
         }

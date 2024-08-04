@@ -19,7 +19,7 @@
             <div>
               <el-row style="margin-bottom: 5px">
                 <el-col :span="8">
-                  <el-image :src="book.pic_url" style="width: 100px;height: 120px"></el-image>
+                  <el-image :src="require('@/assets/' + book.pic_url)" style="width: 100px;height: 120px"></el-image>
                 </el-col>
                 <el-col :span="16">
                   <div style="color: #8c939d;font-size: smaller;">
@@ -125,7 +125,7 @@ import {getUser} from '../../../api/storage'
 export default {
   data () {
     return {
-      baseURL: 'api/client/orders/detail/',
+      baseURL: '/api/client/orders/detail/',
       bookHadRemoved: false,
       IsRefund: false,
       bookAmount: {

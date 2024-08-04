@@ -23,7 +23,7 @@
              label="书名" align="left"
              width="200px">
              <template slot-scope="scope">
-               <el-button type="text" @click="goDetail(scope.row.book_name)">
+               <el-button type="text" @click="goDetail(scope.$index,scope.row)">
                  <span style="margin-left: 10px">{{ scope.row.book_name }}</span>
                </el-button>
              </template>
@@ -68,7 +68,7 @@ import {getUser} from '../../../api/storage'
 export default {
   data () {
     return {
-      baseURL: 'api/client/books/by-is_new_book/12',
+      baseURL: '/api/client/books/by-is_new_book/12',
       newBookData: [{
         id: 0,
         book_number: '',
@@ -105,7 +105,7 @@ export default {
   },
   methods: {
     handleAddCart (bookID) {
-      this.$api.post('api/client/carts/add/' + bookID).then(response => {
+      this.$api.post('/api/client/carts/add/' + bookID).then(response => {
         if (response.message === 'OK') {
           setCart(getUser().id, bookID, 1)
           this.$message({
@@ -133,8 +133,8 @@ export default {
         }
       })
     },
-    goDetail (name) {
-      this.$router.push({name: 'ClientShowDetail', query: {bookName: name}})
+    goDetail (index, row) {
+      this.$router.push({name: 'ClientShowDetail', query: {bookName: row.book_name}})
     }
   }
 }

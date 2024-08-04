@@ -85,7 +85,7 @@ import {getUser} from '../../api/storage'
 export default {
   data () {
     return {
-      baseURL: 'api/client/orders',
+      baseURL: '/api/client/orders',
       ordersData: [{
         id: 0,
         login_name: '',

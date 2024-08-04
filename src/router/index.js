@@ -22,11 +22,12 @@ import BooksOrder from '@/views/client_pages/books_order/order_page_choose.vue'
 import BooksCategory from '@/views/client_pages/books_catrgory/books_category.vue'
 import ShoppingCart from '@/views/client_pages/shopping_cart/cart_page_choose.vue'
 import BooksOrderDetail from '@/views/client_pages/books_order/books_order_detail.vue'
-import ClientSignup from '../views/client_pages/client-signup.vue'
-import ClientShowSearch from '../views/client_pages/client-showsearch.vue'
-import ClientShowDetail from '../views/client_pages/client-showdetail.vue'
-import ClientShowPollResult from '../views/client_pages/client-showpollresult.vue'
-import ClientSubmitOrder from '../views/client_pages/shopping_cart/client-submit-order.vue'
+import DirectSubmit from '@/views/client_pages/shopping_cart/direct_submit.vue'
+import ClientSignup from '@/views/client_pages/client-signup.vue'
+import ClientShowSearch from '@/views/client_pages/client-showsearch.vue'
+import ClientShowDetail from '@/views/client_pages/client-showdetail.vue'
+import ClientShowPollResult from '@/views/client_pages/client-showpollresult.vue'
+import ClientSubmitOrder from '@/views/client_pages/shopping_cart/client-submit-order.vue'
 Vue.use(Router)
 
 const originalPush = Router.prototype.push
@@ -38,7 +39,7 @@ export default new Router({
   routes: [
     {
       // 用户组路由
-      path: '/home',
+      path: '/',
       name: 'Home',
       component: Home,
       redirect: '/recommended-books',
@@ -102,6 +103,11 @@ export default new Router({
           path: '/books-order-detail',
           name: 'BooksOrderDetail',
           component: BooksOrderDetail
+        },
+        {
+          path: '/client-direct-buy',
+          name: 'DirectSubmit',
+          component: DirectSubmit
         }
       ]
     },

@@ -13,7 +13,7 @@
         <!-- pic -->
         <el-col :span="10">
           <el-card :shadow="'always'" :body-style="{padding: '0'}">
-            <el-image :src="BookDetail.pic_url"
+            <el-image :src="require('@/assets/' + BookDetail.pic_url)"
                       style="width: 100%;height:250px;padding-bottom: 0">
             </el-image>
           </el-card>
@@ -89,7 +89,7 @@
                   <el-button size="mini" type="danger" @click="AddCart(BookDetail.id)">加入购物车</el-button>
                 </el-col>
                 <el-col :span="6">
-                  <el-button size="mini" type="primary">立即购买</el-button>
+                  <el-button size="mini" type="primary" @click="goPay">立即购买</el-button>
                 </el-col>
               </el-row>
             </div>
@@ -151,7 +151,7 @@ export default {
   methods: {
     formatDate,
     AddCart (bookID) {
-      this.$api.post('api/client/carts/add/' + bookID).then(response => {
+      this.$api.post('/api/client/carts/add/' + bookID).then(response => {
         if (response.message === 'OK') {
           setCart(getUser().id, bookID, this.count)
           this.$message({
@@ -161,7 +161,7 @@ export default {
         } else if (response.err_code === 100102) {
           this.$message({
             type: 'info',
-            message: '登录后可加购'
+            message: '请先登录'
           })
         } else {
           this.$message({
@@ -173,7 +173,7 @@ export default {
     },
     getBookDetail () {
       let b = this.$route.query.bookName
-      this.$api.get('api/client/books/' + b).then(response => {
+      this.$api.get('/api/client/books/' + b).then(response => {
         if (response.message === 'OK') {
           if (response.err_code === 100204) {
             this.$message({
@@ -187,6 +187,18 @@ export default {
       })
     },
     handleChange (val) {
+    },
+    goPay () {
+      let user = getUser()
+      if (user === null) {
+        this.$message({
+          type: 'info',
+          message: '请先登录'
+        })
+        return
+      }
+      this.$router.push({name: 'DirectSubmit',
+        query: {data: JSON.stringify({'book': this.BookDetail, 'Amount': this.count})}})
     }
   }
 }

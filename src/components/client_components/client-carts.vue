@@ -24,7 +24,7 @@
                   </el-checkbox>
                 </div>
                 <div style="float: left">
-                  <el-image :src="cart.pic_url"
+                  <el-image :src="require('@/assets/' + cart.pic_url)"
                             style="width: 100px; height: 100px;border-radius: 10px"
                             fit="fit"></el-image>
                 </div>
@@ -172,7 +172,7 @@ export default {
       for (let i = 0; i < this.checkedCart.length; i++) {
         bookIDs[i] = this.checkedCart[i].id
       }
-      this.$api.postSpecial('api/client/carts/remove', {book_id: bookIDs
+      this.$api.postSpecial('/api/client/carts/remove', {book_id: bookIDs
       }).then(response => {
         if (response.message === 'OK') {
           // 成功
@@ -204,7 +204,7 @@ export default {
     },
     // 清空
     handleFlush () {
-      this.$api.del('api/client/carts/flush').then(response => {
+      this.$api.del('/api/client/carts/flush').then(response => {
         if (response.message === 'OK') {
           this.empty = true
         }

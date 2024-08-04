@@ -55,7 +55,7 @@ import {getUser} from '../../../api/storage'
 export default {
   data () {
     return {
-      baseURL: 'api/client/books/by-category',
+      baseURL: '/api/client/books/by-category',
       categories: [{
         category_id: 0,
         name: '',
@@ -84,7 +84,7 @@ export default {
       })
     },
     handleAddCart (bookID) {
-      this.$api.post('api/client/carts/add/' + bookID).then(response => {
+      this.$api.post('/api/client/carts/add/' + bookID).then(response => {
         if (response.message === 'OK') {
           setCart(getUser().id, bookID, 1)
           this.$message({

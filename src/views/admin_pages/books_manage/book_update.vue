@@ -188,7 +188,7 @@ export default {
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.$api.put('api/admin/books/update/' + this.paramID, {
+          this.$api.put('/api/admin/books/update/' + this.paramID, {
             BookNumber: this.ruleForm.book_number,
             BookName: this.ruleForm.book_name,
             CategoryName: this.ruleForm.category_name,

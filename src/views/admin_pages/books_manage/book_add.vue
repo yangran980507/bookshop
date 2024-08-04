@@ -175,7 +175,7 @@ export default {
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.$api.post('api/admin/books/book-storage', this.ruleForm)
+          this.$api.post('/api/admin/books/book-storage', this.ruleForm)
             .then(response => {
               if (response.message === 'OK') {
                 this.$message({

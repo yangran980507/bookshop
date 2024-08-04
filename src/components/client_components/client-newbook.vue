@@ -11,60 +11,70 @@
       </div>
     </el-header>
     <el-main style="background-color: white">
-     <el-row :gutter="10" style="text-align: left;margin-bottom: 2px;">
-       <el-link size="mini" @click="getDetails(books[0].book_name)" :underline="false">
+     <el-row style="text-align: left;margin-bottom: 2px;">
        <el-col :span="5">
+         <el-link @click="getDetails(books[0].book_name)" :underline="false">
          <el-image style="width: 35px;height: 35px;border-radius: 2px"
-                   :src=img[0] :fit="'scale-down'"></el-image>
+                   :src=img[0] fit="'scale-down'"></el-image>
+         </el-link>
        </el-col>
        <el-col :span="19">
+         <el-link @click="getDetails(books[0].book_name)" :underline="false">
          <span style="font-size: smaller;word-wrap: break-word">《{{books[0].book_name}}》</span>
+         </el-link>
        </el-col>
-       </el-link>
      </el-row>
-      <el-row :gutter="10" style="text-align: left;margin-bottom: 2px">
-        <el-link size="mini" @click="getDetails(books[1].book_name)" :underline="false">
+      <el-row style="text-align: left;margin-bottom: 2px">
           <el-col :span="5">
+            <el-link size="mini" @click="getDetails(books[1].book_name)" :underline="false">
             <el-image style="width: 35px;height: 35px;border-radius: 2px"
-                      :src=img[1] :fit="'scale-down'"></el-image>
+                      :src=img[1] fit="'scale-down'"></el-image>
+            </el-link>
           </el-col>
           <el-col :span="19">
+            <el-link size="mini" @click="getDetails(books[1].book_name)" :underline="false">
             <span style="font-size: smaller">《{{books[1].book_name}}》</span>
+            </el-link>
           </el-col>
-        </el-link>
       </el-row>
-      <el-row :gutter="10" style="text-align: left;margin-bottom: 2px">
-        <el-link size="mini" @click="getDetails(books[2].book_name)" :underline="false">
+      <el-row style="text-align: left;margin-bottom: 2px">
           <el-col :span="5">
+            <el-link size="mini" @click="getDetails(books[2].book_name)" :underline="false">
             <el-image style="width: 35px;height: 35px;border-radius: 2px"
-                      :src=img[2] :fit="'scale-down'"></el-image>
+                      :src=img[2] fit="'scale-down'"></el-image>
+            </el-link>
           </el-col>
           <el-col :span="19">
+            <el-link size="mini" @click="getDetails(books[2].book_name)" :underline="false">
             <span style="font-size: smaller">《{{books[2].book_name}}》</span>
+            </el-link>
           </el-col>
-        </el-link>
       </el-row>
-      <el-row :gutter="10" style="text-align: left;margin-bottom: 2px">
-        <el-link size="mini" @click="getDetails(books[3].book_name)" :underline="false">
+      <el-row style="text-align: left;margin-bottom: 2px">
           <el-col :span="5">
+            <el-link size="mini" @click="getDetails(books[3].book_name)" :underline="false">
             <el-image style="width: 35px;height: 35px;border-radius: 2px"
-                      :src=img[3] :fit="'scale-down'"></el-image>
+                      :src=img[3] fit="'scale-down'"></el-image>
+            </el-link>
           </el-col>
           <el-col :span="19">
+            <el-link size="mini" @click="getDetails(books[3].book_name)" :underline="false">
             <span style="font-size: smaller">《{{books[3].book_name}}》</span>
+            </el-link>
           </el-col>
-        </el-link>
       </el-row>
-      <el-row :gutter="10" style="text-align: left;margin-bottom: 2px">
-        <el-link size="mini" @click="getDetails(books[4].book_name)" :underline="false">
+      <el-row style="text-align: left;margin-bottom: 2px">
           <el-col :span="5">
+            <el-link size="mini" @click="getDetails(books[4].book_name)" :underline="false">
             <el-image style="width: 35px;height: 35px;border-radius: 2px"
-                      :src=img[4] :fit="'scale-down'"></el-image>
+                      :src=img[4] fit="'scale-down'"></el-image>
+            </el-link>
           </el-col>
           <el-col :span="19">
+            <el-link size="mini" @click="getDetails(books[4].book_name)" :underline="false">
             <span style="font-size: smaller">《{{books[4].book_name}}》</span>
+            </el-link>
           </el-col>
-        </el-link>
       </el-row>
       <el-row style="margin-top: 5px;margin-bottom: 0">
         <el-col :span="4" :offset="20">
@@ -82,7 +92,7 @@
 export default {
   data () {
     return {
-      baseURL: 'api/client/books/by-is_new_book/5',
+      baseURL: '/api/client/books/by-is_new_book/5',
       books: [{
         book_name: ''
       }, {

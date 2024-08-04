@@ -33,7 +33,7 @@
           <el-card :body-style="{ padding: '10px' }"
                    style="margin-bottom: 10px;padding-bottom: 10px">
             <div style="float: left">
-              <el-image :src="single.pic_url"
+              <el-image :src="require('@/assets/' + single.pic_url)"
                         style="width: 100px; height: 100px;border-radius: 10px"
                         fit="fit"></el-image>
             </div>
@@ -197,6 +197,7 @@ export default {
             type: 'error',
             message: response.data
           })
+          this.$router.push({name: 'Home'})
         }
       })
     }

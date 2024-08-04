@@ -62,7 +62,7 @@ export default {
   },
   methods: {
     login () {
-      this.$api.post('api/client/auth/login', this.person).then(response => {
+      this.$api.post('/api/client/auth/login', this.person).then(response => {
         if (response.message === 'OK') {
           this.$message({
             message: response.details,

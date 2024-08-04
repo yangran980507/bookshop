@@ -108,7 +108,7 @@ export default {
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.$api.post('api/client/auth/signup', this.signupForm)
+          this.$api.post('/api/client/auth/signup', this.signupForm)
             .then(response => {
               if (response.message === 'OK') {
                 this.$message({

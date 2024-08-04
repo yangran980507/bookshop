@@ -23,9 +23,11 @@
                 <el-card :body-style="{padding: '0px'}"
                          :shadow="'always'" style="width: 110px">
                   <div>
-                    <el-image :src="book.pic_url" style="width: 100%;
+                    <el-link size="mini" @click="showDetail(book.book_name)" :underline="false">
+                    <el-image :src="require('@/assets/' + book.pic_url)" style="width: 100%;
                       height: 120px">
                     </el-image>
+                    </el-link>
                   </div>
                   <div style="text-align: center">
                     <el-row>
@@ -87,7 +89,7 @@ import {getUser} from '../../../api/storage'
 export default {
   data () {
     return {
-      baseURL: 'api/client/books/by-recommended/12',
+      baseURL: '/api/client/books/by-recommended/12',
       recommendedBooks: [{
         id: 0,
         book_number: '',
@@ -136,7 +138,7 @@ export default {
         query: {bookName: key}})
     },
     AddCart (bookID) {
-      this.$api.post('api/client/carts/add/' + bookID).then(response => {
+      this.$api.post('/api/client/carts/add/' + bookID).then(response => {
         if (response.message === 'OK') {
           setCart(getUser().id, bookID, 1)
           this.$message({

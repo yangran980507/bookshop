@@ -74,7 +74,7 @@ import {getUser} from '../../../api/storage'
 export default {
   data () {
     return {
-      baseURL: 'api/client/books/by-sold/12',
+      baseURL: '/api/client/books/by-sold/12',
       sellBookData: [{
         id: 0,
         book_number: '',
@@ -111,7 +111,7 @@ export default {
   },
   methods: {
     handleAddCart (bookID) {
-      this.$api.post('api/client/carts/add/' + bookID).then(response => {
+      this.$api.post('/api/client/carts/add/' + bookID).then(response => {
         if (response.message === 'OK') {
           setCart(getUser().id, bookID, 1)
           this.$message({

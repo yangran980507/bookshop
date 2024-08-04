@@ -38,7 +38,7 @@
 export default {
   data () {
     return {
-      baseURL: 'api/client/polls',
+      baseURL: '/api/client/polls',
       pollImg: [require('../../assets/28.jpeg')],
       pollData: [{
         option_name: '',
@@ -71,6 +71,11 @@ export default {
           this.$message({
             type: 'success',
             message: response.data
+          })
+        } else if (response.err_code === 100102) {
+          this.$message({
+            type: 'error',
+            message: '请先登录'
           })
         } else {
           this.$message({

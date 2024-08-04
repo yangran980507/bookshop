@@ -90,7 +90,7 @@ export default {
   },
   methods: {
     handleAddCart (bookID) {
-      this.$api.post('api/client/carts/add/' + bookID).then(response => {
+      this.$api.post('/api/client/carts/add/' + bookID).then(response => {
         if (response.message === 'OK') {
           setCart(getUser().id, bookID, 1)
           this.$message({

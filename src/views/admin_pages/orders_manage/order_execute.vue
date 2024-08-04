@@ -116,7 +116,7 @@ import {formatDateToSecond} from '../../../api/public'
 export default {
   data () {
     return {
-      baseURL: 'api/admin/orders',
+      baseURL: '/api/admin/orders',
       empty: true,
       ordersData: [{
         id: 0,
